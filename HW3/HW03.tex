@@ -1,0 +1,582 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsfonts}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsrefs}
+\usepackage{ulem}
+\usepackage[dvips]{graphicx}
+\usepackage{bm}
+\usepackage{cancel}
+\usepackage{color}
+
+\setlength{\headheight}{26pt}
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+
+\topmargin 0pt
+%Forrest Shortcuts
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{pf}{Proof}
+\newtheorem{sol}{Solution}
+\newcommand{\R}{{\ensuremath{\mathbb R}}}
+\newcommand{\J}{{\ensuremath{\mathbb J}}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\T}{{\mathbb T}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\st}{{\text{\ s.t.\ }}}
+\newcommand{\rto}{\hookrightarrow}
+\newcommand{\rtto}{\hookrightarrow\rightarrow}
+\newcommand{\tto}{\to\to}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\ep}{\epsilon}
+%CJ shortcuts
+\newcommand{\thin}{\thinspace}
+\newcommand{\beps}{\boldsymbol{\epsilon}}
+\newcommand{\bwoc}{by way of contradiction}
+
+%Munkres formatting?
+%\renewcommand{\theenumii}{\alph{enumi}}
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\theenumii}{\alph{enumii}}
+\renewcommand{\labelenumii}{(\theenumii)}
+
+\title{HW3}
+\author{Guanlin Zhang}
+
+\lhead{Dr Milind Phadnis
+ \\BIOS 900} \chead{}
+\rhead{Guanlin Zhang\\Fall '17} \pagestyle{fancyplain}
+%\maketitle
+
+\begin{document}
+Question $\# 1$.
+\begin{sol}
+	Exercise $8.5$:\vskip 2mm
+	We want to show:
+	\begin{align*}
+		E(\text{SSR}/k) = \sigma^2 + (1/k){\bf \beta}_1'{\bf X}'_c{\bf X}_c{\bf \beta}_1
+	\end{align*}
+	(a): approach the proof by using:
+	\begin{align*}
+		E[{\bf y}'{\bf A}{\bf y}] = \text{tr}({\bf A\Sigma}) + {\bf \mu}'{\bf A}\mu
+	\end{align*}
+	for symmetric matrix ${\bf A}$.\vskip 2mm
+	We have:
+	\begin{align*}
+		\text{SSR}&= {\bf y}'{\bf X}_c({\bf X}_c'{\bf X}_c)^{-1}{\bf X}_c'{\bf y} = {\bf y}{\bf H}_c{\bf y}\\
+		& \text{ with }\\
+		{\bf H}_c &= {\bf X}_c({\bf X}_c'{\bf X}_c)^{-1}{\bf X}_c'
+	\end{align*}
+	Since we know from Theorem $8.1$(a) that ${\bf H}$ is idempotent with rank $k$, thus
+	\begin{align*}
+		tr({\bf H}_c \Sigma) &= tr(\sigma^2{\bf H}_c) = k\sigma^2
+	\end{align*}
+	and we claim before hand that ${\bf j'}{\bf X}_c = {\bf 0}'$ due to the fact that the column sums of ${\bf X}_c$ are all $0$. We will use this soon. Also we have:
+	\begin{align*}
+		E[{\bf y}] &= {\bf X}{\bf \beta} = ({\bf j}, {\bf X}_c)\left(\begin{array}{c} \alpha\\ {\bf \beta}_1 \end{array}\right) = \alpha{\bf j} + {\bf X}_c{\bf \beta}_1
+	\end{align*}
+	so we have the following computation:
+	\begin{align*}
+		E[SSR] &= E[{\bf y}'{\bf H}_c{\bf y}] = E[{\bf y}'{\bf X}_c({\bf X}_c'{\bf X}_c)^{-1}{\bf X}_c'{\bf y}]\\
+		&= tr(\sigma^2{\bf H}_c) + \Big({\bf X}{\bf \beta}\Big)'{\bf X}_c\Big({\bf X}_c'{\bf X}_c\Big)^{-1}{\bf X}_c'\Big({\bf X}{\bf \beta}\Big)\\
+		&= k\sigma^2 + \Big(\alpha{\bf j}' + \beta_1'{\bf X}_c'\Big){\bf X}_c\Big({\bf X}_c'{\bf X}_c\Big)^{-1}{\bf X}_c'\Big(\alpha{\bf j} + {\bf X}_c\beta_1\Big)\\
+		&= k\sigma^2 + \alpha^2{\bf j}'{\bf X}_c\Big({\bf X}'_c{\bf X}_c\Big)^{-1}{\bf X}_c{\bf j} + 2\alpha{\bf j}'{\bf X}_c\Big({\bf X}_c'{\bf X}_c\Big)^{-1}{\bf X}_c'{\bf X}_c{\bf \beta}_1\\
+		&\ \hskip 2cm + \beta_1'{\bf X}_c'{\bf X}_c\Big({\bf X}_c'{\bf X}_c\Big)^{-1}{\bf X}_c'{\bf X}_c\beta_1\\
+		&= k\sigma^2 + 0 + 0 + \beta'_1{\bf X}_c'{\bf X}_c\beta_1
+	\end{align*} 
+	So
+	\begin{align*}
+		E(\text{SSR}/k) = \sigma^2 + (1/k){\bf \beta}_1'{\bf X}'_c{\bf X}_c{\bf \beta}_1
+	\end{align*}
+	(b):  approach the proof by using the noncentral chi square distribution result:\vskip 2mm
+	By Theorem $8.1b$ we know that $SSR/\sigma^2$ is $\chi^2(k, \lambda_1)$ with
+	\begin{align*}
+		\lambda_1 &= \frac{1}{2\sigma^2}{\bf \beta}_1'{\bf X}'_c{\bf X}_c{\bf \beta}_1
+	\end{align*}	
+	So by theorem $5.23$(b) there is:
+	\begin{align*}
+		E[SSR/\sigma^2] &= k + 2\lambda = k + \frac{1}{\sigma^2}{\bf \beta}_1'{\bf X}'_c{\bf X}_c{\bf \beta}_1
+	\end{align*}	
+	Thus
+	\begin{align*}
+		E[SSR/k] &= \frac{\sigma^2}{k}\Big(k + \frac{1}{\sigma^2}{\bf \beta}_1'{\bf X}'_c{\bf X}_c{\bf \beta}_1\Big)\\
+		&= \sigma^2 + \frac{1}{k}{\bf \beta}_1'{\bf X}'_c{\bf X}_c{\bf \beta}_1
+	\end{align*}
+%	Since 
+%	\begin{align*}
+%		\text{SSR}&= {\bf y}'{\bf X}_c({\bf X}_c'{\bf X}_c)^{-1}{\bf X}_c'{\bf y} = {\bf y}{\bf H}_c{\bf y}\\
+%		& \text{ with }\\
+%		{\bf H}_c &= {\bf X}_c({\bf X}_c'{\bf X}_c)^{-1}{\bf X}_c'
+%	\end{align*}
+%	and from Theorem $8.1$(a) we know ${\bf H}_c$ is idempotent with rank $k$, so $\text{SSR}/\sigma^2$ is $\chi^2(k, \lambda)$ with 
+%	\begin{align*}
+%		\lambda &= \frac{1}{2}\mu'{\bf H}_c\mu = \frac{1}{2}{\bf X}\beta{\bf H}_c{\bf X}\beta = \frac{1}{2}(\alpha{\bf j}' + {\bf \beta}_1'{\bf X}_c'){\bf H}_c(\alpha{\bf j} + {\bf X}_c{\bf \beta}_1)\\
+%		&= \frac{1}{2}\Big(\alpha^2{\bf j}'H_c{\bf j} + 2\alpha{\bf j}'{\bf H}_c{\bf X}_c{\bf \beta}_1+ {\bf \beta}_1'{\bf X}_c'{\bf H}_c{\bf X}_c{\bf \beta}_1\Big)\\
+%		&= \frac{1}{2}\Big(0 + 0 + \beta_1'{\bf X}_c'{\bf X}_c\beta_1\Big)\\
+%		&= \frac{1}{2}\beta_1'{\bf X}_c'{\bf X}_c\beta_1
+%	\end{align*}
+%	So by Theorem $5.23$(b), we know that for non-central chi square $\chi^2(k, \lambda)$, there is
+%	\begin{align*}
+%		E[SSR/\sigma^2] &= k + 2\lambda = k + 
+%	\end{align*}
+	Exercise 8.9:\vskip 2mm
+	Given the set up ${\bf y}$ is $N_n({\bf X}\beta, \sigma^2 {\bf I})$, we know that ${\bf y}'({\bf H} - {\bf H}_1){\bf y}/\sigma^2$ is $\chi^2(h, \lambda_1)$, with $\lambda_1 = \frac{1}{2\sigma^2}{\bf \mu}'\Big({\bf H} - {\bf H}_1\Big){\bf \mu}$ according to corollary $2$ of Theorem $5.5$.\vskip 2mm
+	We keep in mind that:
+	\begin{align*}
+		&\ {\bf X} ={\bf H}{\bf X}\\
+		&\ {\bf X}_1 = {\bf H}{\bf X}_1\\
+		&\ {\bf X}_1 = {\bf H}_1{\bf X}_1\\
+		&\ {\bf X}_2 = {\bf H}{\bf X}_2
+	\end{align*}
+	Then we have the following computation:
+	\begin{align*}
+		&\ {\bf \mu}'({\bf H}- {\bf H}_1){\bf \mu}\\
+		&=({\bf X}\beta)'\Big({\bf H} - {\bf H}_1\Big)({\bf X}\beta)\\
+		&= \Big[({\bf X}_1, {\bf X}_2)\left(\begin{array}{c} \beta_1\\ \beta_2\end{array}\right)\Big]' \Big({\bf H} - {\bf H}_1\Big)\Big[({\bf X}_1, {\bf X}_2)\left(\begin{array}{c} \beta_1\\ \beta_2\end{array}\right)\Big]\\
+		&=({\bf \beta}_1'{\bf X}'_1 + {\bf \beta}_2'{\bf X}_2')\Big({\bf H} - {\bf H}_1\Big)({\bf X}_1\beta_1 + {\bf X}_2\beta_2)\\
+		&= \Big[\beta_1'{\bf X}_1'{\bf H} - \beta_1'{\bf X}_1'{\bf H}_1 + \beta_2'{\bf X}_2'{\bf H} - \beta_2'{\bf X}_2'{\bf H}_1\Big]({\bf X}_1\beta_1 + {\bf X}_2\beta_2)\\
+		&= \Big(\beta_1'{\bf X}_1' - \beta_1'{\bf X}_1' + \beta_2'{\bf X}_2' - \beta_2'{\bf X}_2'{\bf H}_1\Big)({\bf X}_1\beta_1 + {\bf X}_2\beta_2)\\
+		 &= \Big(\beta_2'{\bf X}_2' - \beta_2'{\bf X}_2'{\bf H}_1\Big)({\bf X}_1\beta_1 + {\bf X}_2\beta_2)\\
+		 &= \cancel{\beta_2'{\bf X}_2'{\bf X}_1\beta_1}  + \beta_2'{\bf X}_2'{\bf X}_2\beta_2 - \cancel{\beta_2'{\bf X}_2'{\bf X}_1\beta_1} - \beta_2'{\bf X}_2'{\bf H}_1{\bf X}_2\beta_2\\
+		 &=\beta_2'\Big({\bf X}_2'{\bf X}_2 - {\bf X}_2'{\bf H}_1{\bf X}_2\Big)\beta_2\\
+		 &= \beta_2'\Big({\bf X}_2'{\bf X}_2 - {\bf X}_2'{\bf X}_1({\bf X}_1'{\bf X}_1)^{-1}{\bf X}_1'{\bf X}_2\Big)\beta_2
+	\end{align*}
+	divide both sides by $2\sigma^2$ then we finished the proof.\vskip 2mm
+	Exercise $8.11$:\vskip 2mm
+	Continue from above, since by Theorem $8.2$b we know that:
+	\begin{align*}
+		SS(\beta_2\ \beta_1)/\sigma^2  = {\bf y}'({\bf H} - {\bf H}_1){\bf y}/\sigma^2 \text{ is } \chi^2(h, \lambda_1)
+	\end{align*}
+	with 
+	\begin{align*}
+		\lambda_1 = \beta_2'\Big({\bf X}_2'{\bf X}_2 - {\bf X}_2'{\bf X}_1({\bf X}_1'{\bf X}_1)^{-1}{\bf X}_1'{\bf X}_2\Big)\beta_2/2\sigma^2
+	\end{align*}
+	as we have just verified in exercise $8.9$.\vskip 2mm
+	Then according to Theorem $5.3$(b), we have:
+	\begin{align*}
+		E[SS(\beta_2|\beta_1)]/\sigma^2 &=  h + 2\lambda_1\\
+		&= h + \beta_2'\Big({\bf X}_2'{\bf X}_2 - {\bf X}_2'{\bf X}_1({\bf X}_1'{\bf X}_1)^{-1}{\bf X}_1'{\bf X}_2\Big)\beta_2/\sigma^2
+	\end{align*}
+	Multiply both sides of the equation above by $\frac{\sigma^2}{h}$ then we completed the proof.\vskip 2mm
+	Now for the general linear hypothesis, we have from Theorem $8.4$(a):
+	\begin{align*}
+			&\ \frac{SSH}{\sigma^2} \sim \chi^2(q, \lambda) \\
+			&\text{with } \lambda = ({\bf C}\beta)'\Big[{\bf C}\Big({\bf X}'{\bf X}\Big)^{-1}{\bf C}'\Big]^{-1}{\bf C}\beta/2\sigma^2
+	\end{align*}
+	So we have:
+	\begin{align*}
+		E[\frac{SSH}{\sigma^2}] &= q + 2\lambda = q + ({\bf C}\beta)'\Big[{\bf C}\Big({\bf X}'{\bf X}\Big)^{-1}{\bf C}'\Big]^{-1}{\bf C}\beta/\sigma^2
+	\end{align*}
+	Then multiply both sides by $\frac{\sigma^2}{q}$, we get equation $(8.28)$.
+\end{sol}
+
+Question $2$.
+\begin{sol}
+	For part $[A]$:\vskip 2mm
+	(i)-(v) we use the general linear hypothesis $H_0: {\bf C}\beta = 0$ (we could use Ful-Reduced model for (i) but it is just easier to do all with the same).\vskip 2mm
+	We have:
+	\begin{align*}
+		{\bf C}_1 &= (0, 1, 0, 0, 0)\\
+		{\bf C}_2 &= \left[\begin{array}{ccccc} 0&1&0&0&0\\ 0&0&0&1&0\end{array}\right]\\
+		{\bf C}_3 &= \left[\begin{array}{ccccc} 0&0&1&0&0\\ 0&0&0&1&0\\ 0&0&0&0&1\end{array}\right]\\
+		{\bf C}_4 &= (0, 1, 0, -2, -2)\\
+		{\bf C}_5 &= (0, -3, 1, -3, -3) \text{ with } t = 0.25
+	\end{align*}
+	For $(i) - (iv)$ our test statistic is:
+	\begin{align*}
+		F &= \frac{SSH/q}{SSE/(n - k - 1)} = \frac{({\bf C}\hat{\beta})'[{\bf C}({\bf X}'{\bf X})^{-1}{\bf C}']^{-1}({\bf C}\hat{\beta})/q}{{\bf y}'({\bf I} - {\bf H}){\bf y}/(n - k - 1)} \sim F(q, n - k - 1) \text{ under null}
+	\end{align*}
+	For $(v)$ our test statistic is:
+	\begin{align*}
+		F &= \frac{SSH/q}{SSE/(n - k - 1)} = \frac{({\bf C}\hat{\beta} - {\bf t})'[{\bf C}({\bf X}'{\bf X})^{-1}{\bf C}']^{-1}({\bf C}\hat{\beta} - {\bf t})/q}{{\bf y}'({\bf I} - {\bf H}){\bf y}/(n - k - 1)} \sim F(q, n - k - 1) \text{ under null}
+	\end{align*}
+	We reject for large value of $F$.\vskip 2mm
+	We intput the data and compute $\hat{\beta}$ under proc iml:
+	\begin{center}
+		\includegraphics[width = 10cm]{q101.jpg}
+	\end{center}
+	We then set up the matrix ${\bf C}$, compute SSE and SSH for $(i) - (v)$:
+	\begin{center}
+		\includegraphics[width = 14cm]{q102.jpg}
+	\end{center}
+	We then compute the F statistics and p value for each test:
+	\begin{center}
+		\includegraphics[width = 6cm]{q103.jpg}
+	\end{center}	
+	The output is the following:
+	\begin{center}
+		\includegraphics[width = 4cm]{q104.jpg}
+	\end{center}	
+	For $\alpha = 0.05$, we would reject that $H_0: \beta_1 = 0$, reject $H_0: \beta_1 = \beta_3 = 0$, reject $H_0: \beta_2 = \beta_3 = \beta_4 = 0$, fail to reject $H_0: \beta_1 = 2(\beta_3 + \beta_4)$ and fail to reject $H_0: \beta_2 - 3(\beta_1 + \beta_3 + \beta_4) = 0.25$.\vskip 2mm
+	Now for part $(vi)$:\vskip 2mm
+	We are doing simultaenoues tests for $H_{0i}: {\bf a}_i \beta = 0$ with
+	\begin{align*}
+		{\bf a}_1 &= (0, 1, 0, 0, 0)\\
+		{\bf a}_2 &= (0, 0, 1, 0, 0)\\
+		{\bf a}_3 &= (0, 0, 0, 1, 0)\\
+		{\bf a}_4 &= (0, 0, 0, 0, 1)
+	\end{align*} 
+	Our F statistic is:
+	\begin{align*}
+		F_i &= \frac{({\bf a}_i\hat{\beta})'\Big[{\bf a}_i({\bf X}'{\bf X})^{-1}{\bf a}_i'\Big]^{-1}{\bf a}_i\hat{\beta}}{SSE/(n - k - 1)} \sim F(1, n - k - 1) \text{ under null}
+	\end{align*}
+	The following code copute the F statistic and the Bonferronni p-values:
+	\begin{center}
+		\includegraphics[width = 14cm]{q105.jpg}
+	\end{center}	
+	Output is:
+	\begin{center}
+		\includegraphics[width = 12cm]{q106.jpg}
+	\end{center}	
+	Keep in mind here we have the family wise sigificance level $\alpha_f = 0.05$ and comparions wise significan level $\alpha_c = \alpha_f/d = 0.05/4 = 0.0125$.\vskip 2mm
+	So from above output we will reject $H_{01}: \beta_1 =0$, reject $H_{02}: \beta_2 = 0$, fail to reject $H_{03}: \beta_3 = 0 $ and fail to reject $H_{04}: \beta_4 = 0$.\vskip 2mm
+	For the same F statistic, we also have:
+	\begin{align*}
+		\max_{1 \leq i \leq 4}F_i  \sim (k + 1)F(k + 1, n - k - 1)
+	\end{align*}
+	To use Scheffe, we reject $H_{0i}: \beta_i = 0$ when $F_i \geq  (k + 1)F_{\alpha, k + 1, n - k - 1}$
+	The following code compare the left and right hand side of the inequality above:
+	\begin{center}
+		\includegraphics[width = 10cm]{q107.jpg}
+	\end{center}	
+	The output is:
+	\begin{center}
+		\includegraphics[width = 10cm]{q108.jpg}
+	\end{center}	
+	so we will fail to reject $H_{01}: \beta_1 = 0$, reject $H_{02}: \beta_2 = 0$, fail to reject $H_{03}: \beta_3 = 0$ and fail to reject $H_{04}: \beta_4 = 0$ under scheffe method.\vskip 2mm
+	Thus completed the solution for part $[A]$.\vskip 2mm
+	For part $[B]$:\vskip 2mm
+	For part ${i}$: The individual confidence intervals for $\beta_j$ assume the following form:
+	\begin{align*}
+		\hat{\beta}_j \pm t_{\alpha/2, n - k - 1} s\sqrt{g_{jj}}
+	\end{align*}
+ 	In our previous code we already have $\hat{\beta}_j$ and SSE, so $s = SSE/(n - k - 1)$, and we only need to extract
+ 	\begin{align*}
+ 		g_{jj} &= \Big({\bf X}'{\bf X}\Big)^{-1}_{jj}, j = 1, 2, 3, 4
+ 	\end{align*}
+ 	Our SAS code:
+ 	\begin{center}
+		\includegraphics[width = 12cm]{q109.jpg}
+	\end{center}	
+	The matrix $({\bf X}'{\bf X})^{-1}$:
+	\begin{center}
+		\includegraphics[width = 10cm]{q110.jpg}
+	\end{center}	
+	The estiamte $\hat{\beta}$:
+	\begin{center}
+		\includegraphics[width = 2.5cm]{q111.jpg}
+	\end{center}	
+	Confidence interval:
+	\begin{center}
+		\includegraphics[width = 14cm]{q112.jpg}
+	\end{center}
+	or explicitly, the $95\%$ confidence interval for the individual parameters are:
+	\begin{align*}
+		\text{ for }\beta_1&: (0.0210695, 0.1503176)\\
+		\text{ for }\beta_2&: (0.254352, 0.7824815)\\
+		\text{ for }\beta_3&: (0.0031344, 0.0449498)\\
+		\text{ for }\beta_4&: (0.0029784, 0.0365)
+	\end{align*}
+	For part $(ii)$:\vskip 2mm
+	the general set up for the confidence interval for ${\bf a}'\beta$ is:
+	\begin{align*}
+		{\bf a}'\hat{\beta} \pm t_{\alpha/2, n - k - 1}s\sqrt{{\bf a}'\Big({\bf X}'{\bf X}\Big)^{-1}{\bf a}}
+	\end{align*}
+	here we want to estimate the confidence interval for $\beta_1 - 2(\beta_3 + \beta_4)$ hence
+	\begin{align*}
+		{\bf a}  &= \left[\begin{array}{c} 0 \\ 1\\ 0\\ -2\\ -2\end{array}\right]
+	\end{align*}
+	Our code is:
+	\begin{center}
+		\includegraphics[width = 12cm]{q113.jpg}
+	\end{center}
+	Output is:
+	\begin{center}
+		\includegraphics[width = 3.5cm]{q114.jpg}
+	\end{center}
+	So our confidence interval for $\beta_1 - 2\beta_3-2\beta_4$ is:
+	\begin{align*}
+		(-0.085198, 0.0814596)
+	\end{align*}
+	For part $(iii)$:\vskip 2mm
+	We have the general formula for $100(1 - \alpha)\%$ confidence interval of $\sigma^2$ as:
+	\begin{align*}
+		\frac{(n - k - 1)s^2}{\chi^2_{\alpha/2, n - k - 1}} \leq \sigma^2 \leq \frac{(n - k - 1)s^2}{\chi^2_{1 - \alpha/2, n - k - 1}}
+	\end{align*}
+	Our code is:
+	\begin{center}
+		\includegraphics[width = 12cm]{q117.jpg}
+	\end{center}
+	Output:
+	\begin{center}
+		\includegraphics[width = 5cm]{q118.jpg}
+	\end{center}
+	So the $95\%$ confidence interval for $\sigma^2$ is:
+	\begin{align*}
+		(1.8409298, 3.146023)
+	\end{align*}
+	\vskip 2mm
+	For part [C]:\vskip 2mm
+	The prediction interval for ${\bf y}_0 = {\bf x}_0\beta + \epsilon$ is given by the following formula:
+	\begin{align*}
+		{\bf x}_0'\hat{\beta} \pm t_{\alpha/2, n - k - 1}s\sqrt{1 + {\bf x}_0'\Big({\bf X}'{\bf X}\Big)^{-1}{\bf x_0}}
+	\end{align*}
+	here since we are only using age as predictor, we have $k = 1$, and also we need to re-compute $\hat{\beta}$ and $\text{SSE}$.\vskip 2mm
+	We also have
+	\begin{align*}
+		{\bf x}_0 = \left[\begin{array}{c}1 \\ 67\end{array}\right]
+	\end{align*}
+	We have the folowing code:
+	\begin{center}
+		\includegraphics[width = 15cm]{q115.jpg}
+	\end{center}
+	The output is:
+	\begin{center}
+		\includegraphics[width = 4cm]{q116.jpg}
+	\end{center}
+	So the prediction interval for a patient of age $67$ is:
+	\begin{align*}
+		(6.8550178, 14.670272)
+	\end{align*}
+	For part $[D]$:\vskip 2mm
+	The maximum likelihood estimate of $\beta $ and $\sigma^2$ under the null $H_0: {\bf C}\beta = 0$ is given by:
+	\begin{align*}
+		\hat{\beta}_0 &= \hat{\beta} - ({\bf X}'{\bf X})^{-1}{\bf C}'\Big[{\bf C}({\bf X}'{\bf X})^{-1}{\bf C}'\Big]^{-1}{\bf C}\hat{\beta}\\
+		\hat{\sigma}^2_0 &= \hat{\sigma}^2 + \frac{1}{n}({\bf C}\hat{\beta})'\Big[{\bf C}({\bf X}'{\bf X})^{-1}{\bf C}'\Big]^{-1}{\bf C}\hat{\beta}
+	\end{align*}
+	where 
+	\begin{align*}
+		\hat{\beta} &= ({\bf X}'{\bf X})^{-1}{\bf X}'{\bf y}\\
+		\hat{\sigma}^2 &= ({\bf y} - {\bf X}\hat{\beta})'({\bf y} - {\bf X}\hat{\beta})/n
+	\end{align*}
+	are the MLE under alternative $H_1: {\bf C}\beta \neq 0$.
+	We then have:
+	\begin{align*}
+		LR &= \frac{\max_{H_0}L(\beta, \sigma^2)}{\max_{H_1}L(\beta, \sigma^2)}\\
+		&= \Big[\frac{SSE}{SSE + ({\bf C}\hat{\beta})'[C({\bf X}'{\bf X})^{-1}{\bf C}']^{-1}{\bf C}\hat{\beta}}\Big]^{\frac{n}{2}}\\
+		&= \Big[\frac{1}{1 + SSH/SSE}\Big]^{n/2}\\
+		&= \Big[\frac{1}{1 + qF/(n - k - 1)}\Big]^{n/2}
+	\end{align*}
+	We use $\chi^2$ approximation for $-2\log \text{LR}$ and show that it gives the same p-value as in the F test we did in part [A](iv).\vskip 2mm
+	We have $-2log \text{LR} \sim \chi^2(1)$. We have the following code:
+	\begin{center}
+		\includegraphics[width = 12cm]{q119.jpg}
+	\end{center}
+	The output for $-2\log \text{LR}$(chi square test statistic) and p-value is:
+	\begin{center}
+		\includegraphics[width = 3cm]{q120.jpg}
+	\end{center}
+	So we have $-2\log \text{LR} = 0.002068$ and $p$ value $0.9637284$, which is about identical to the p value we have earlier with F test(0.9646). The difference is due to two factors. One is that our chi-square distribution is only approximate, and the other factor is rounding error. But we can see they are pretty close.\vskip 2mm
+	Thus finished Problem 2.
+\end{sol} 
+
+Problem $3.$
+\begin{sol}
+	To detect outliers, we consider the following plots:\vskip 2mm
+	We plot (i)studentized residuals against fitted value, (ii)deleted residuals against fitted value, (iii)ordinary residual against deleted residual:\vskip 2mm
+	We need to be careful that since $\text{var}(\hat{\epsilon}_i) = \sigma^2(1 - h_{ii})$ is not constant, we should scale it into studentized residual or deleted residual before we make a plot agasint fitted value:\vskip 2mm
+	Our code:\vskip 2mm
+	Input the data:
+	\begin{center}
+		\includegraphics[width = 12cm]{q303.jpg}
+	\end{center}
+	Import the data into proc iml:
+	\begin{center}
+		\includegraphics[width = 10cm]{q304.jpg}
+	\end{center}
+	Compute necessary quantites: $\hat{\beta}$, SSE, $\hat{y}$, $\hat{e}_i$(residual),$r_i$(studentized residual) and $\hat{e}_{(i)}$(deleted residual):
+	\begin{center}
+		\includegraphics[width = 8cm]{q305.jpg}
+	\end{center} 
+	Make a scatter plot of studentized residuals against fitted value, and deleted residuals against fitted value, as well as deleted residual against ordinary residuals\vskip 2mm
+	\begin{center}
+		\includegraphics[width = 8cm]{q306.jpg}
+	\end{center}
+	The output is:
+	\begin{center}
+		\includegraphics[width = 8cm]{q301.jpg}\includegraphics[width = 8cm]{q302.jpg}
+	\end{center}
+	\begin{center}
+		\includegraphics[width = 8cm]{q307.jpg}
+	\end{center}
+	As we can see that although on different scale, both residuals against fitted value scatter plots display the same pattern. And we marked with red circle for potential outliers.\vskip 2mm
+	On the other hand, the ordinary residual against deleted residual plot does not indicate any obvious candidate for outliers.\vskip 2mm
+	The data does not come with input index $i$, so we could not plot residuals against $i$ here.\vskip 2mm
+	For influential observations, we compute the following things (will show code and output):
+	\begin{enumerate}
+		\item Residuals: we compute studentized, studentized external, and deleted residuals.
+		\item PRESS: prediction sum of square
+		\item Cooks distance
+	\end{enumerate}
+	Our code is as following:
+	\begin{center}
+		\includegraphics[width = 12cm]{q308.jpg}
+	\end{center}
+	\begin{center}
+		\includegraphics[width = 12cm]{q309.jpg}
+	\end{center}
+	also, as suggested by Hoaglin and Welsch(1978), the high leverage point is 
+	\begin{align*}
+		\frac{2(k + 1)}{n} = \frac{2\times (3 + 1)}{34} = 0.2352941
+	\end{align*}
+	We give the SAS output as a table similar to Table 9.1 as the example from the book:
+	\begin{center}
+		\includegraphics[width = 16cm]{q310.jpg}
+	\end{center}
+	\begin{center}
+		\includegraphics[width = 16cm]{q311.jpg}
+	\end{center}
+	The observation number here are what we manually added, just make it easier to point out which observation we are talking about. But it is not the real observation index since it is not given in the data.\vskip 2mm
+	As we can see that observation $21$ and $28$ has a larger leverage than the suggested high leverage point. Also observation $5$, $32$ and $33$ have relatively large leverage as well. From leverage aspect, these points can be potentially influential to the model.\vskip 2mm
+    Among these points, we can see that observation $5$, $32$, $33$ also have relatively large Cook's distance, relatively large studentized residual($r_i$) and relatively large studentized external residuals($t_i$), their absolute values either larger than or close to $2$.  So we believe than they are potentially very influential to the model.\vskip 2mm
+    Under the current model we have PRESS value as $2751.1794$. If we decide to fit other models by deleting a few observations, we can also compare different PRESS values (the model with smaller PRESS value may be preferred).
+\end{sol}
+
+Question $4$.
+\begin{sol}
+	For part $(i)$:\vskip 2mm
+	To verify ${\bf G}$ is the generalized inverse of ${\bf X}'{\bf X}$, we just need to check by definition that we have:
+	\begin{align*}
+		{\bf X}'{\bf X}{\bf G}{\bf X}'{\bf X} = {\bf X}'{\bf X}
+	\end{align*}
+	The following code compute both left hand side and right hand side and print them out, and we will see from the output that they are equal.
+	\begin{center}
+		\includegraphics[width = 10cm]{q401.jpg}
+	\end{center}
+	\begin{center}
+		\includegraphics[width = 14cm]{q402.jpg}
+	\end{center}
+	So ${\bf G}$ is the generalized inverse of ${\bf X}'{\bf X}$.\vskip 2mm
+	For part $(ii)$:\vskip 2mm
+	A solution to the equation
+	\begin{align*}
+		({\bf X}'{\bf X}){\bf b} = {\bf X}'{\bf Y}
+	\end{align*}
+	assumes the form of 
+	\begin{align*}
+		\hat{{\bf b}} &= ({\bf X}'{\bf X})^{(-)}{\bf X}'{\bf Y}
+	\end{align*}
+	From part $(a)$ we have checked that ${\bf G} = ({\bf X}'{\bf X})^{(-)}$, So we just need to plug it into the equation above to get a version of the solution.\vskip 2mm
+	The following code compute ${\bf A} = ({\bf X}'{\bf X})^{(-)}{\bf X}' = {\bf G}{\bf X}'$ and print it out:
+	\begin{center}
+		\includegraphics[width = 8cm]{q403.jpg}
+	\end{center}
+	\begin{center}
+		\includegraphics[width = 14cm]{q404.jpg}
+	\end{center}
+	So a solution would be:
+	\begin{align*}
+		\hat{{\bf b}} &= \left[\begin{array}{c}\hat{\mu} \\ \hat{\alpha}_1\\ \hat{\alpha}_2\\ \hat{\alpha}_3  \end{array}\right] = {\bf A}{\bf Y} = \left[\begin{array}{c}0 \\ \frac{1}{2}Y_{11} + \frac{1}{2}Y_{12} \\ \frac{1}{4}(Y_{21} + Y_{22} + Y_{23} + Y_{24})\\ \frac{1}{2}(Y_{31} + Y_{32}) \end{array}\right]
+	\end{align*}
+	For part $(iii)$:\vskip 2mm
+	Let's form a matrix from ${\bf c}_1^T, {\bf c}_2^T, {\bf c}_3^T$:
+	\begin{align*}
+		{\bf C} = [{\bf c}_1, {\bf c}_2, {\bf c}_3] = \left[\begin{array}{ccc}1 &1&1\\ 1&0&0\\ 0&1&0\\ 0&0&1\end{array}\right]
+	\end{align*}
+	We know for all matrices its row rank is equal to its column rank. If we look at the rows for matrix ${\bf C}$, the 2nd, 3rd and 4th rows are the natural basis of $\mathbb{R}^3$, and hence independent. Also, the 2rd, 3rd, and 4th rows sum up equal to the first row, so the row rank of ${\bf C}$ is $3$, then the column rank of ${\bf C}$ is also $3$, hence ${\bf c}_1, {\bf c}_2, {\bf c}_3$ are independent, so are their transpose.\vskip 2mm
+	For $(iv)$:\vskip 2mm
+	We have already proved in part $(iii)$ that ${\bf c}_1^T, {\bf c}_2^T$ and ${\bf c}_3^T$ are linearly independent. Now we just need to show that every single row in ${\bf X}$ can be linearly spanned from ${\bf c}_1^T, {\bf c}_2^T$ and ${\bf c}_3^T$.\vskip 2mm
+	\begin{align*}
+		\text{row }1 \text{ and row }2&\ \\
+		(1, 1, 0, 0) &= c_1^T\\
+		\text{row }3-6 &\ \\
+		(1, 0, 1, 0) &= c_2^T\\
+		\text{row }7-8 &\ \\
+		(1, 0, 0, 1) &= c_3^T
+	\end{align*}
+	So the vector space spanned by the rows of ${\bf X}$ are essentially the space spanned by ${\bf c}_1, {\bf c}_2$ and ${\bf c}_3$.\vskip 2mm
+	For part $(v)$:vskip 2mm
+	To show that ${\bf c}_1^T\beta, {\bf c}_2^T\beta$ and ${\bf c}_3^T\beta$ are estimable functions of $\beta$, we only need to show that ${\bf c}_1^T, {\bf c}_2^T$ and ${\bf c}_3^T$ are in the row space of ${\bf X}$, thanks to theorem $12.2(b)$. This is obvious, because ${\bf c}_1^T$ is just the first and second row of ${\bf X}$, ${\bf c}_2^T$ is the same as the third to sixth row of ${\bf X}$ ,and ${\bf c}_3^T$ is the last two rows of ${\bf X}$, so all are in the linear space expanded by the rows of ${\bf X}$, and hence ${\bf c}_1^T\beta, {\bf c}_2^T\beta$ and ${\bf c}_3^T\beta$ are estimable.\vskip 2mm
+	For part $(vi)$:\vskip 2mm
+	By Theorem 12.2c, we know that the number of linearly independent estimable function of $\beta$ is the rank of ${\bf X}$, which in this case the rank is $3$. and as we can see that ${\bf c}_1^T, {\bf c}_2^T$ and ${\bf c}_3^T$ are three independent vectors, so ${\bf c}_1^T\beta, {\bf c}_2^T\beta$ and ${\bf c}_3^T\beta$ already form the maximum number of linearly independent estimable functions of $\beta$, and any other estimable linear functions of $\beta$ should be their linear combination (remember in part $(iv)$ we proved that ${\bf c}_1^T, {\bf c}_2^T$ and ${\bf c}_3^T$ form basis of the row space of ${\bf X}$). Thus finished the proof.\vskip 2mm
+	For part $(vii)$:\vskip 2mm
+	We have a design matrix ${\bf X}$ whose dimension is $n \times p$ with $n = 8, p = 4$ but with rank $k = 3 < p < n$. We can write our model as a one-way anova model as:
+	\begin{align*}
+		y_{ij} = \mu + \alpha_{i} + \epsilon_{ij}
+	\end{align*}
+	with $1 \leq i \leq 3$, and when $i = 1, 1 \leq j \leq 2$ when $i = 2, 1 \leq j \leq 4$ and when $i = 3, 1 \leq j \leq 2$.\vskip 2mm
+	It is over-parametrized as we have proved in Theorem $12.2a$ that we could not get unique estimate for each single parameter $\mu, \alpha_1, \alpha_2, \alpha_3$\vskip 2mm
+	A way to reparametrize this is to write $\mu + \alpha_i = \alpha_i^{\ast}$ as our new parameter, so our model becomes
+	\begin{align*}
+		y_{ij} &= \alpha_i^{\ast} + \epsilon_{ij}
+	\end{align*}
+	and the design matrix becomes
+	\begin{align*}
+		{\bf X}^{\ast} &= \left[\begin{array}{ccc} 1 &0 &0\\ 1&0&0\\ 0&1&0\\ 0&1&0\\ 0&1&0\\ 0&1&0\\0 &0&1\\ 0&0&1\end{array}\right]
+	\end{align*}
+	which is now full rank.\vskip 2mm
+	Then we can obtain the estimate for our parameter as:
+	\begin{align*}
+		\left[\begin{array}{c} \hat{\alpha}^{\ast}_1\\ \hat{\alpha}^{\ast}_2\\ \hat{\alpha}^{\ast}_3\end{array}\right]
+		&= \left[\begin{array}{c} \hat{\mu} +  \hat{\alpha}_1\\ \hat{\mu} + \hat{\alpha}_2\\ \hat{\mu} + \hat{\alpha}_3\end{array}\right] = \Big(({\bf X}^{\ast})'{\bf X}^{\ast}\Big)^{-1}({\bf X}^{\ast})'{\bf y}\\
+		&= \left[\begin{array}{cccccccc} \frac{1}{2}&\frac{1}{2}&&&&&&\\ &&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&&\\ &&&&&&\frac{1}{2}&\frac{1}{2}\end{array}\right]{\bf y}\\
+		&= \left[\begin{array}{c} \frac{1}{2}Y_{11} + \frac{1}{2}Y_{12}\\ \frac{1}{4}(Y_{21} + Y_{22} + Y_{23} + Y_{24})\\ \frac{1}{2}(Y_{31} + Y_{32})\end{array}\right]
+	\end{align*}
+	For $(viii)$:\vskip 2mm
+	Interesting enough, we can simply choose the side condition $\mu = 0$, then we will get the same estimate as in part $(ii)$ and part $(vii)$.\vskip 2mm
+	It is not hard to see the relationship between the estimate of part $(ii)$ and part $(vii)$. If we add a side condition $\mu = 0$ to part $(vii)$, since part $(vii)$ already estimated $\mu + \alpha_1, \mu + \alpha_2$ and $\mu + \alpha_3$, now we can plug in $\mu = 0$, which gives us the estimate in part $(ii)$. But as we know that the choice of side condition is not unique, so this is just one version of the estimate for $(\mu, \alpha_1, \alpha_2, \alpha_3)$.\vskip 2mm
+	To show the choice of side condition is non-estimable function of $\beta$, we are looking at all those $\lambda' = (0, k_1, k_2, k_3)$ since our side condition is $\mu = 0$. Apparently for some choice of $k_1, k_2$ and $k_3$, the vector $(0, k_1,k_2,k_3)$ can not be spanned from the rows of ${\bf X}$. For example, take $\lambda' = (0, 1, 0, 0)$, or $\lambda' = (0, 0, 1, 0)$ or $\lambda' = (0, 0, 0, 1)$.
+\end{sol}
+
+Question $5$.
+\begin{sol}
+	Given the model, our design matrix and response are:
+	\begin{align*}
+		{\bf X} &= \left[\begin{array}{ccc} 1&1&0\\ 1&0&1\\ 1&1&0\\ 1&0&1\\ 1&1&0\\ 1&0&1\\ 1&1&0\\ 1&0&1\\ 1&1&0\\1&0&1 \end{array}\right]\hskip 1cm {\bf y} = \left[\begin{array}{c}120 \\140 \\135 \\110 \\160 \\164 \\155 \\175 \\170 \\165 \end{array}\right]
+	\end{align*}
+	To check for estimability, we just need to see if the following functions of $\beta$ has coefficient vector that can be spanned from the row space of $X$.\vskip 2mm
+	For $(i)$:\vskip 2mm
+	$\mu = (1, 0, 0)\beta$, it is not in the row space of ${\bf X}$ and hence not estimable.\vskip 2mm
+	For $(ii)$:\vskip 2mm
+	$\mu + \alpha_1 = {\bf \lambda}'\beta = (1, 1, 0)\beta$, it is in the row space of ${\bf X}$ and hence is estimable. In this case, we have $\lambda' = (1, 1, 0) = {\bf a}'{\bf X}$. Since $(1, 1, 0)$ is just the first row of ${\bf X}$, so we have ${\bf a}' = (1, 0, 0, 0, 0, 0, 0, 0, 0, 0)$.\vskip 2mm
+	Since $(1, 1, 0)$ is also the same vector for some other rows of $X$, so we can have different choice of ${\bf a}$. For example, if we see $(1, 1, 0)$ as the 3rd row of ${\bf X}$, then we can have ${\bf a}' = (0, 0, 1, 0, 0, 0, 0, 0, 0, 0)$\vskip 2mm
+	For $(iii)$:
+	\begin{align*}
+		\alpha_1- \alpha_2 = {\bf \lambda}'\beta = (0, 1, -1)\beta
+	\end{align*}
+	Since $(0, 1, -1)$ can be viewed as the difference between row $1$ and row $2$ of ${\bf X}$, it is in the row space, andhence $\alpha_1 - \alpha_2$ is estimable.\vskip 2mm
+	For $(0, 1, -1)= {\bf a}'{\bf X}$, we have ${\bf a}' = (1, -1, 0, 0, 0, 0, 0, 0, 0, 0)$\vskip 2mm
+	For $(iv)$:
+	\begin{align*}
+		\alpha_1+ \alpha_2 = {\bf \lambda}'\beta = (0, 1, 1)\beta
+	\end{align*}
+	however it is impossible to get $1$ for both second and third element and cancel out the first one, hence $(0, 1, 1)$ not in the row space of ${\bf X}$, and $\alpha_1 + \alpha_2$ is not estimable.
+\end{sol}
+
+Question $6$.
+\begin{sol}
+I confirm that I have studied the solutions of these problems.
+\end{sol}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
