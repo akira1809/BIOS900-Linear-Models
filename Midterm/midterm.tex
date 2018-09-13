@@ -1,0 +1,550 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsfonts}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsrefs}
+\usepackage{ulem}
+\usepackage[dvips]{graphicx}
+\usepackage{bm}
+\usepackage{cancel}
+\usepackage{color}
+
+\setlength{\headheight}{26pt}
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+
+\topmargin 0pt
+%Forrest Shortcuts
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{pf}{Proof}
+\newtheorem{sol}{Solution}
+\newcommand{\R}{{\ensuremath{\mathbb R}}}
+\newcommand{\J}{{\ensuremath{\mathbb J}}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\T}{{\mathbb T}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\st}{{\text{\ s.t.\ }}}
+\newcommand{\rto}{\hookrightarrow}
+\newcommand{\rtto}{\hookrightarrow\rightarrow}
+\newcommand{\tto}{\to\to}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\ep}{\epsilon}
+%CJ shortcuts
+\newcommand{\thin}{\thinspace}
+\newcommand{\beps}{\boldsymbol{\epsilon}}
+\newcommand{\bwoc}{by way of contradiction}
+
+%Munkres formatting?
+%\renewcommand{\theenumii}{\alph{enumi}}
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\theenumii}{\alph{enumii}}
+\renewcommand{\labelenumii}{(\theenumii)}
+
+\title{Midterm}
+\author{Guanlin Zhang}
+
+\lhead{Dr Milind Phadnis
+ \\BIOS 900} \chead{}
+\rhead{Guanlin Zhang\\Fall '17} \pagestyle{fancyplain}
+%\maketitle
+
+\begin{document}
+Question $\# 1$.
+\begin{sol}
+	 For part $[A]$:\vskip 2mm
+	 We want to get the singular value decomposition of ${\bf A}$:\vskip 2mm
+	 We have
+	 \begin{align*}
+	 	{\bf A}{\bf A}' &= \left[\begin{array}{cc} 10 & -5\\ 2& -11\\ 6& -8\end{array}\right]\left[\begin{array}{ccc} 10& 2&6\\ -5&-11&-8  \end{array}\right] = \left[\begin{array}{ccc} 125	&75&100\\ 75&125&100\\ 100&100&100\end{array}\right]
+	 \end{align*}
+	 So we have:
+	 \begin{align*}
+	 	\text{det}(\gamma{\bf I}_3 - {\bf A}{\bf A}') &= \text{det}\Big(\left[\begin{array}{ccc} \gamma - 125&-75&-100\\ -75&\gamma - 125&-100\\ -100&-100&\gamma - 100\end{array}\right]\Big)\\
+	 	&= (\gamma - 125)\cdot \text{det}\Big(\left[\begin{array}{cc}\gamma - 125&-100 \\-100 &\gamma -100 \end{array}\right]\Big) + 75\text{det}\Big(\left[\begin{array}{cc} -75& -100\\ -100&\gamma - 100 \end{array}\right]\Big)\\
+	 	&\ \hskip 2cm - 100\text{det}\Big(\left[\begin{array}{cc} -75&-100 \\ \gamma - 125&-100 \end{array}\right]\Big)\\
+	 	&= (\gamma - 125)\Big[(\gamma - 125)(\gamma - 100) - 10,000\Big] + 75\Big[-75(\gamma - 100) - 10,000\Big] \\
+	 	&\ \hskip 2cm - 100\Big(7,500 + 100(\gamma - 125)\Big)\\
+	 	&= (\gamma - 125)^2(\gamma - 100) - 10,000(\gamma - 125) - 5,625(\gamma - 100) - 750,000\\
+	 	&\ \hskip 2cm - 750,000 - 10,000(\gamma - 125)\\
+	 	&= (\gamma - 125)^2(\gamma - 100) - 20,000(\gamma - 125) - 5,625(\gamma - 100) - 1,500,000\\
+	 	&= (\gamma^2 -  250\gamma + 15,625)(\gamma - 100) - 20,000(\gamma - 125) - 5,625(\gamma - 100) \\
+	 	&\ \hskip 2cm - 1,500,000\\
+	 	&= \gamma^3 - 100\gamma^2 - 250\gamma^2 + 25,000\gamma + 15,625\gamma - 1,562,500 - 20,000\gamma \\
+	 	&\ \hskip 2cm + 2,500,000 - 5,625\gamma + 256,500 - 1,500,000\\
+	 	&= \gamma^3 - 350\gamma^2 + 15,000\gamma\\
+	 	&= \gamma(\gamma^2 - 350\gamma + 15,000)\\
+	 	&= \gamma(\gamma - 300)(\gamma - 50)
+	 \end{align*}
+	 So the $3$ eigen values for ${\bf A}{\bf A}'$ are $\gamma_1 =300, \gamma_2 = 50$ and $\gamma_3 = 0$.\vskip 2mm
+	 We intentionally made them in descending order, because later when we verify these results in SAS it is also the algorithm SAS is using. It is easier for us to get consistent results this way.\vskip 2mm
+	 Now we look for the {\bf unit} eigenvectors for each eigenvalue. We solve them by doing the Gauss elimination on the rows:\vskip 2mm
+	 When $\gamma_1= 300$, we have:
+	 \begin{align*}
+	 	\gamma_1{\bf I} - {\bf A}{\bf A}' &= \left[\begin{array}{ccc} 175&-75 &-100 \\ -75&175&-100 \\ -100&-100&200\end{array}\right]
+	 	\Longrightarrow 
+	 	\left[\begin{array}{ccc}-1&-1&2\\ 3  &-7&4\\7&-3&-4 \end{array}\right]
+	 	\Longrightarrow
+	 	\left[\begin{array}{ccc} -1& -1&2\\ 0&-10 &10\\ 0&-10 &10\end{array}\right]\\
+	 	&\Longrightarrow \left[\begin{array}{ccc} -1&-1 &2\\ 0&-1 &1\\ 0&0 &0\end{array}\right]
+	 \end{align*}
+	 Suppose ${\bf x} = (x_1, x_2, x_3)'$ is one of the eigenvectors, then the above row operation implies that $x_2 = x_3$ and $x_1 = -x_2 + 2x_3 = x_3$.\vskip 2mm
+	 So a candidate of the eigenvector would be $(1, 1, 1)'$, and hence we got the unit eigenvector:
+	 \begin{align*}
+	 	{\bf u}_1 &= \left[\begin{array}{c}\frac{1}{\sqrt{3}}\\ \frac{1}{\sqrt{3}}\\ \frac{1}{\sqrt{3}}\end{array}\right]
+	 \end{align*}
+	 A quick comment here: the choice of eigenvectors are not unique, but we generally make the first element of the eigenvector positive, in order to get consistent results when we verify the correctness of the SVD later.\vskip 2mm
+	 Now when $\gamma_2 = 50$, we have:\vskip 2mm
+	 We have:
+	 \begin{align*}
+	 	\gamma_2{\bf I} - {\bf A}{\bf A}' &= \left[\begin{array}{ccc} -75&-75&-100\\ -75&-75&-100\\-100 &-100&-50\end{array}\right] \Longrightarrow\left[\begin{array}{ccc}-2&-2&-1\\ 3&3&4\\ 3&3&4\end{array}\right]\Longrightarrow \left[\begin{array}{ccc} -2& -2&-1\\ 0&0 &\frac{5}{2}\\ 0&0&0 \end{array}\right]
+	 \end{align*}
+	 Suppose ${\bf x} = (x_1, x_2, x_3)'$ is one of the eigenvectors, then the above row operation implies that $x_3 = 0, x_2 = -x_1$ and hence $(1, -1, 0)'$ is one of the eigenvectors. So the unit eigenvector is:
+	 \begin{align*}
+	 	{\bf u}_2 &= \left[\begin{array}{c}\frac{1}{\sqrt{2}}\\ -\frac{1}{\sqrt{2}}\\0 \end{array}\right]
+	 \end{align*}
+	 Finally when $\gamma_3 = 0$, we have:
+	 \begin{align*}
+	 	\gamma_3 {\bf I} - {\bf A}{\bf A}' &= \left[\begin{array}{ccc}-125&-75&-100 \\ -75&-125&-100 \\ -100&-100&-100 \end{array}\right]\Longrightarrow \left[\begin{array}{ccc} 1&1&1\\-3 &-5&-4\\ -5&-3&-4\end{array}\right]\Longrightarrow \left[\begin{array}{ccc} 1&1&1\\ 0&-2&-1 \\ 0&2&1 \end{array}\right]\\
+	 	&\Longrightarrow \left[\begin{array}{ccc} 1&1&1 \\ 0&2&1 \\ 0 &0&0\end{array}\right]
+	 \end{align*}
+	 Suppose ${\bf x} = (x_1, x_2, x_3)'$ is one of the eigenvectors, then the above row operation implies that $x_2 = -\frac{1}{2}x_3$, and $x_1 = -x_2-x_3 = \frac{1}{2}x_3 - x_3 = -\frac{1}{2}x_3$. So a candidate of the eigenvector would be $(1, 1, -2)'$ and hence the unit eigenvector is:
+	 \begin{align*}
+	 	{\bf u}_3 = \left[\begin{array}{c} \frac{1}{\sqrt{6}}\\ \frac{1}{\sqrt{6}}\\ -\frac{2}{\sqrt{6}}\end{array}\right]
+	 \end{align*}
+	 Thus we have found
+	 \begin{align*}
+	 	{\bf U} = [{\bf u}_1, {\bf u}_2, {\bf u}_3] = \left[\begin{array}{ccc} \frac{1}{\sqrt{3}}&\frac{1}{\sqrt{2}}&\frac{1}{\sqrt{6}}\\ \frac{1}{\sqrt{3}}&-\frac{1}{\sqrt{2}}& \frac{1}{\sqrt{6}}\\\frac{1}{\sqrt{3}}&0&-\frac{2}{\sqrt{6}}\end{array}\right]
+	 \end{align*}
+	 On the other hand, we have:
+	 \begin{align*}
+	 	 {\bf A}'{\bf A} &= \left[\begin{array}{ccc} 10&2&6 \\ -5&-11&-8 \end{array}\right]\left[\begin{array}{cc}10&-5 \\ 2&-11 \\ 6&-8 \end{array}\right] = \left[\begin{array}{cc} 140&-120 \\ -120&210  \end{array}\right]
+	 \end{align*}
+	 So
+	 \begin{align*}
+	 	\text{det}(\gamma {\bf I}_2 - {\bf A}'{\bf A}) &= \text{det}\Big(\left[\begin{array}{cc} \gamma - 140&120 \\ 120&\gamma - 210  \end{array}\right]\Big) = (\gamma - 140)(\gamma - 210) - 14,400\\
+	 	&= \gamma^2 - 350\gamma + 29,400 - 14,400\\
+	 	&= \gamma^2 - 350\gamma + 15,000\\
+	 	&= (\gamma - 300)(\gamma - 50)
+	 \end{align*}
+	 So we have the two eigenvalues for ${\bf A}'{\bf A}$ as $\gamma_1 = 300, \gamma_2 = 50$.\vskip 2mm
+	 When $\gamma_1 = 300$, we have:
+	 \begin{align*}
+	 	\gamma_1{\bf I}_2  - {\bf A}'{\bf A} &= \left[\begin{array}{cc} 160&120 \\120 &90 \end{array}\right] \Longrightarrow \left[\begin{array}{cc} 4&3 \\ 4& 3\end{array}\right]\Longrightarrow \left[\begin{array}{cc} 4& 3\\ 0&0 \end{array}\right]
+	 \end{align*}
+	 The row operation above implies that if ${\bf x} = (x_1, x_2)'$ is one of the eigenvectors, then $4x_1 + 3x_2 = 0$, and hence one of the candidate would be $(3, -4)'$, and hence a unit eigenvector is
+	 \begin{align*}
+	 	{\bf v}_1 &= \left[\begin{array}{c} \frac{3}{5}\\ -\frac{4}{5}\end{array}\right]
+	 \end{align*}
+	 When $\gamma_2 = 50$, we have:
+	 \begin{align*}
+	 	\gamma_2 {\bf I}_2 - {\bf A}'{\bf A} &= \left[\begin{array}{cc} -90&120 \\ 120&-160 \end{array}\right] \Longrightarrow \left[\begin{array}{cc} -3&4 \\ 3& -4\end{array}\right]\Longrightarrow \left[\begin{array}{cc} -3&4 \\0 &0 \end{array}\right]
+	 \end{align*}
+	 The above row operation implies that, if ${\bf x} = (x_1, x_2)'$ is an eigenvector, then $-3x_1 + 4x_2 = 0$, this implies that a candidate would be $(4, 3)'$, and hence the unit eigenvector is:
+	 \begin{align*}
+	 	{\bf v}_2 &= \left[\begin{array}{c} \frac{4}{5} \\ \frac{3}{5} \end{array}\right]
+	 \end{align*}
+	 Hence we have found:
+	 \begin{align*}
+	 	{\bf V} &= \left[{\bf v}_1, {\bf v}_2\right] = \left[\begin{array}{cc} \frac{3}{5}&\frac{4}{5} \\ -\frac{4}{5}&\frac{3}{5} \end{array}\right]
+	 \end{align*}
+	 We notice that ${\bf U}$ and ${\bf V}$ have the same two largest eigenvalues $\gamma_1 = 300$, and $\gamma_2 = 50$, thus we have $\lambda_1 = \sqrt{\gamma_1} = 10\sqrt{3}$ and $\lambda_2 = \sqrt{\gamma_2} = 5\sqrt{2}$, hence we have also found:
+	 \begin{align*}
+	 	\Lambda &=\left[\begin{array}{cc} \lambda_1&0 \\ 0&\lambda_2 \\0 &0 \end{array}\right] =  \left[\begin{array}{cc} 10\sqrt{3}&0 \\ 0&5\sqrt{2} \\ 0&0 \end{array}\right]
+	 \end{align*}
+	 and thus the SVD(singular value decomplsition) of ${\bf A}$ is:
+	 \begin{align*}
+	 	{\bf A} &= {\bf U}{\bf \Lambda}{\bf V}' =  \left[\begin{array}{ccc} \frac{1}{\sqrt{3}}&\frac{1}{\sqrt{2}}&\frac{1}{\sqrt{6}}\\ \frac{1}{\sqrt{3}}&-\frac{1}{\sqrt{2}}& \frac{1}{\sqrt{6}}\\\frac{1}{\sqrt{3}}&0&-\frac{2}{\sqrt{6}}\end{array}\right]\left[\begin{array}{cc} 10\sqrt{3}&0 \\ 0&5\sqrt{2} \\ 0&0 \end{array}\right] \left[\begin{array}{cc} \frac{3}{5}&-\frac{4}{5} \\ \frac{4}{5}&\frac{3}{5} \end{array}\right]
+	 \end{align*}
+	 To verify with software, we did this with both SAS and R.\vskip 2mm
+	 In SAS, we run the svd function under proc iml as the following:
+	 \begin{center}
+	 	\includegraphics[width=8cm]{Q101.jpg}
+	 \end{center}
+	 The output is:
+	  \begin{center}
+	 	\includegraphics[width=10cm]{Q102.jpg}
+	 \end{center}
+	 This matches with our manual computation above since $\frac{1}{\sqrt{3}}\simeq 0.5773503$ and $\frac{1}{\sqrt{2}} \simeq 0.7071068$. Also $10\sqrt{3} \simeq 17.32051$ and $5\sqrt{2} \simeq 7.071068$.\vskip 2mm
+	 In $R$, we simply check that the manually computed ${\bf U}, {\bf \Lambda}$ and ${\bf V}'$ above do multiply to get back to ${\bf A}$:
+	  \begin{center}
+	 	\includegraphics[width=12cm]{Q103.jpg}
+	 \end{center}
+	 the output is:
+	  \begin{center}
+	 	\includegraphics[width=6cm]{Q104.jpg}
+	 \end{center}
+	 Thus our SVD is correct.\vskip 2mm
+	 For part $[B]$:\vskip 2mm
+	 For part $(i)$:\vskip 2mm
+	 To check that ${\bf G}$ is a generalized inverse of ${\bf A}$, we need to show that ${\bf A}{\bf G}{\bf A} = {\bf A}$.\vskip 2mm
+	 We have:
+	 \begin{align*}
+	 	{\bf A}{\bf G}{\bf A} &= \Big({\bf M}\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\ {\bf 0}&{\bf 0} \end{array}\right]{\bf Q}^T\Big)\Big({\bf Q}\left[\begin{array}{cc} {\bf W}^{-1}_r&{\bf 0} \\ {\bf 0}&{\bf 0} \end{array}\right]{\bf M}^T\Big)\Big({\bf M}\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\{\bf 0}&{\bf 0}  \end{array}\right]{\bf Q}^T\Big)\\
+	 	&= {\bf M}\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\ {\bf 0}&{\bf 0} \end{array}\right]\Big(\underbrace{{\bf Q}^T{\bf Q}}_{= {\bf I}_n}\Big)\left[\begin{array}{cc} {\bf W}^{-1}_r&{\bf 0} \\ {\bf 0}&{\bf 0} \end{array}\right]\Big(\underbrace{{\bf M}^T{\bf M}}_{ = {\bf I}_n}\Big)\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\{\bf 0}&{\bf 0}  \end{array}\right]{\bf Q}^T\\
+	 	&= {\bf M}\Big(\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\ {\bf 0}&{\bf 0} \end{array}\right]\left[\begin{array}{cc} {\bf W}^{-1}_r&{\bf 0} \\ {\bf 0}&{\bf 0} \end{array}\right]\Big)\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\{\bf 0}&{\bf 0}  \end{array}\right]{\bf Q}^T\\
+	 	&= {\bf M}\left[\begin{array}{cc} {\bf I}_r&{\bf 0} \\ {\bf 0}& {\bf 0}\end{array}\right]\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\{\bf 0}&{\bf 0}  \end{array}\right]{\bf Q}^T\\
+	 	&= {\bf M}\left[\begin{array}{cc} {\bf W}_r&{\bf 0} \\{\bf 0}&{\bf 0}  \end{array}\right]{\bf Q}^T = {\bf A}
+	 \end{align*}
+	 Thus ${\bf G}$ is a generalized inverse of ${\bf A}$.\vskip 2mm
+	 For part $(ii)$:\vskip 2mm
+	 We need to show ${\bf A}{\bf G} = \Big({\bf A}{\bf G}\Big)'$.\vskip 2mm
+	 We have:
+	 \begin{align*}
+	 	{\bf A}{\bf G} &= {\bf M}\left[\begin{array}{cc} {\bf W}_r& {\bf 0}\\ {\bf 0}& {\bf 0}\end{array}\right]{\bf Q}^T{\bf Q}\left[\begin{array}{cc} {\bf W}_r^{-1}& {\bf 0}\\ {\bf 0}&{\bf 0} \end{array}\right]{\bf M}^T\\
+	 	&= {\bf M}\left[\begin{array}{cc} {\bf W}_r& {\bf 0}\\ {\bf 0}& {\bf 0}\end{array}\right]\left[\begin{array}{cc} {\bf W}_r^{-1}& {\bf 0}\\ {\bf 0}&{\bf 0} \end{array}\right]{\bf M}^T\\
+	 	&= {\bf M}\left[\begin{array}{cc} {\bf I}_r& {\bf 0}\\ {\bf 0}& {\bf 0}\end{array}\right]{\bf M}^{T}
+	 \end{align*}
+	 So
+	 \begin{align*}
+	 	\Big({\bf A}{\bf G}\Big)' &= \Big({\bf M}^T\Big)^T\Big(\left[\begin{array}{cc} {\bf I}_r& {\bf 0}\\ {\bf 0}& {\bf 0}\end{array}\right]\Big)^T{\bf M}^T\\
+	 	&= {\bf M}\left[\begin{array}{cc} {\bf I}_r& {\bf 0}\\ {\bf 0}& {\bf 0}\end{array}\right]{\bf M}^{T}\\
+	 	&= {\bf A}{\bf G}
+	 \end{align*}
+	 Thus completed the proof.
+\end{sol}
+
+Question $\# 2.$
+\begin{sol}
+	equation $(7.57)$ says:
+	\begin{align*}
+		E[R^2] &= \frac{k}{n - 1}
+	\end{align*}
+	under the null hypothesis that $\beta_1 = \beta_2 = \cdots = \beta_k = 0$.\vskip 2mm
+	We prove it by finding the distribution of $R^2$.\vskip 2mm
+	According to Theorem $8.1d$(page 187) on the textbook by Rencher and Schaalje, under the null hypothesis of $\beta_1 = \beta_2 = \cdots = \beta_k = 0$, we have:
+	\begin{align*}
+		F = \frac{\text{SSR}/k}{\text{SSE}/(n - k - 1)} \sim F(k, n - k - 1)
+	\end{align*}
+	Since $R^2 = \frac{\text{SSR}}{\text{SST}}$, we try to write $F$ as a function of $R^2$ by noticing that:
+	\begin{align*}
+		F &= \frac{\text{SSR}/k}{\text{SSE}/(n - k - 1)} \sim F(k, n - k - 1)\\
+		   &= \frac{\text{SSR}/k}{(\text{SST} - \text{SSR})/(n - k - 1)}\\
+		   &= \frac{1}{\frac{(\text{SST} - \text{SSR})/(n - k - 1)}{\text{SSR}/k}}\\
+		   &= \frac{1}{\frac{k\text{SST}}{(n - k - 1)\text{SSR}} - \frac{k}{n - k - 1}}\\
+		   &= \frac{1}{\Big(\frac{k}{n - k - 1}\Big)\Big[\frac{1}{R^2} - 1\Big]}
+	\end{align*}
+	So we can alternatively write $R^2$ as a function of $F$:
+	\begin{align*}
+		&\Longrightarrow \frac{1}{R^2} - 1 = \frac{1}{\frac{k}{n - k - 1}F}\\
+		&\Longrightarrow \frac{1}{R^2} =\frac{1 + \frac{k}{n - k - 1}F}{\frac{k}{n - k - 1}F}\\
+		&\Longrightarrow R^2 = \frac{\frac{k}{n - k - 1}F}{1 + \frac{k}{n - k - 1}F} = \frac{kF}{(n - k - 1) + kF}
+	\end{align*}
+	but this implies that
+	\begin{align*}
+		R^2 \sim \text{Beta}(\frac{k}{2}, \frac{n - k - 1}{2})
+	\end{align*}
+	which is a beta distribution with parameter $\alpha = \frac{k}{2}, \beta =\frac{n - k - 1}{2} $.
+	an hence
+	\begin{align*}
+		E[R^2] &= \frac{\alpha}{\alpha + \beta} = \frac{\frac{k}{2}}{\frac{k}{2} +\frac{n - k - 1}{2} }\\
+		&= \frac{k}{n - 1} \text{ equation}(7.57) \\
+		\text{Var}[R^2] &= \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}\\
+		&= \frac{\frac{k}{2}\frac{n - k - 1}{2}}{(\frac{k}{2} + \frac{n - k - 1}{2})^2(\frac{k}{2} + \frac{n - k - 1}{2} + 1)}\\
+		&= \frac{\frac{1}{4}k(n - k - 1)}{\frac{1}{4}(n - 1)^2\frac{1}{2}(n - 1 + 2)}\\
+		&= \frac{2k(n - k - 1)}{(n - 1)^2(n + 1)}
+	\end{align*}
+	for $R^2_{\text{adj}}$, we have the following definition:
+	\begin{align*}
+		R^2_{\text{adj}} &= \frac{(n- 1)R^2 - k}{n - k - 1}
+	\end{align*}
+	So 
+	\begin{align*}
+		E[R^2_{\text{adj}}] &= \frac{(n - 1)E[R^2] - k}{n - k - 1} = \frac{(n - 1)\cdot \frac{k}{n - 1} - k}{n - k - 1} = 0\\
+		\text{Var}[R^2_{\text{adj}}] &= \frac{(n - 1)^2}{(n - k - 1)^2}\text{Var}[R^2] = \frac{(n - 1)^2}{(n - k - 1)^2}\cdot \frac{2k(n - k - 1)}{(n - 1)^2(n + 1)}\\
+		&= \frac{2k}{(n - k - 1)(n + 1)}
+	\end{align*}
+\end{sol}
+
+Question $\# 3.$
+\begin{sol}
+	Translate the question equivalently, we are trying to prove that, for a matrix denoted by $({\bf X}'{\bf X})^{(-)}$, 
+	\begin{align*}
+		&\ ({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}({\bf X}'{\bf X}) = {\bf X}'{\bf X}\\
+		&\iff ({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}{\bf X}'{\bf y} = {\bf X}'y
+	\end{align*}
+	First we assume that $({\bf X}'{\bf X})^{(-)}$ is the generalized inverse of $({\bf X}{\bf X}')$, which is to say:
+	\begin{align*}
+		({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}({\bf X}'{\bf X}) = {\bf X}'{\bf X}
+	\end{align*}
+	Then we have:
+	\begin{align*}
+		({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}({\bf X}'{\bf X})\hat{{\bf \beta}} = ({\bf X}'{\bf X})\hat{{\bf \beta}} ={\bf X}'{\bf y}
+	\end{align*}
+	but for the left hand side above, we can also replace $({\bf X}'{\bf X})\hat{\beta}$ by ${\bf X}'{\bf y}$, thus we have:
+	\begin{align*}
+		({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}{\bf X}'{\bf y} = {\bf X}'{\bf y}
+	\end{align*}
+	which means $({\bf X}'{\bf X})^{(-)}{\bf X}'{\bf y}$ is a solution for $({\bf X}'{\bf X})\hat{{\bf \beta}} = {\bf X}'{\bf y}$.\vskip 2mm
+	On the other direction, we assume that
+	\begin{align*}
+		({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}{\bf X}'{\bf y} = {\bf X}'{\bf y}
+	\end{align*}
+	We can substitute ${\bf X}'{\bf y}$ in terms of the left hand side of the equation into the left hand side itself, thus we have:
+	\begin{align*}
+		({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}{\bf X}'{\bf y} = {\bf X}'{\bf y}
+	\end{align*}
+	Compare the above two equations we have:
+	\begin{align*}
+		\Big[({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}({\bf X}'{\bf X}) - ({\bf X}'{\bf X})\Big]({\bf X}'{\bf X})^{(-)}{\bf X}'{\bf y} =0
+	\end{align*}
+	Since the equation holds true for any possible value of ${\bf y}$, hence we must have:
+	\begin{align*}
+		({\bf X}'{\bf X})({\bf X}'{\bf X})^{(-)}({\bf X}'{\bf X}) = {\bf X}'{\bf X}
+	\end{align*}
+	which is to say $({\bf X}'{\bf X})^{(-)}$ is a generalized inverse of ${\bf X}'{\bf X}$.\vskip 2mm
+	Thus completed the proof.
+\end{sol}
+
+Question $\# 4$.
+\begin{sol}
+	Before we head into any sub question here, we need to be aware that $a{\bf I}_n + b{\bf J}_n$ as a variance matrix of a normal distribution, it should be positive definite.\vskip 2mm
+	It is well known from linear algebra results that ${\bf J}_n$ is a semi-definite matrix with two eigen values, one is $\lambda_1 = n$ with multiplicity $1$ and the other is $\lambda_2 = 0$ with multiplicity $0$, so there exists orthogonal matrix ${\bf D}$ such that
+	\begin{align*}
+		{\bf J}_n = {\bf D}\left[\begin{array}{cccc} n & & & \\ &0&&\\ &&\ddots& \\ &&&0 \end{array}\right]{\bf D}^T
+	\end{align*}	
+	Thus we have:
+	\begin{align*}
+		a{\bf I}_n + b{\bf J}_n &= a{\bf D}{\bf D}^T + b{\bf D}\left[\begin{array}{cccc} n & & & \\ &0&&\\ &&\ddots& \\ &&&0 \end{array}\right]{\bf D}^T\\
+		&= {\bf D}\left[\begin{array}{cccc} a + bn & & & \\ &a&&\\ &&\ddots& \\ &&&a \end{array}\right]{\bf D}^T
+	\end{align*}
+	So a sufficient and necessary condition for $a{\bf I}_n + b{\bf J}_n$ to be positive definite is that:
+	\begin{align*}
+		a > 0 \text{ and } a + bn > 0
+	\end{align*}
+	when we are doing the following problems, our range of $a$ and $b$ should comply with this condition.\vskip 2mm
+	For part $(i)$:\vskip 2mm
+	we have:
+	\begin{align*}
+		\bar{{\bf y}}^2 &=\Big({\bf y}'\frac{{\bf j}}{n}\Big)\cdot \Big(\frac{{\bf j}'}{n}{\bf y}\Big) =  {\bf y}'\frac{{\bf j}{\bf j}'}{n^2}{\bf y} = {\bf y}'\frac{{\bf J}_n}{n^2}{\bf y}
+	\end{align*}
+	which is a quadratic form with ${\bf A} = \frac{{\bf J}_n}{n^2}$. We also know ${\bf y}$ is multivariate normal with 
+	\begin{align*}
+		\Sigma &= a{\bf I}_n + b{\bf J}_n
+	\end{align*}
+	Thus we have:
+	\begin{align*}
+		{\bf A}{\bf \Sigma} &= \frac{{\bf J}_n}{n^2}(a{\bf I}_n + b{\bf J}_n)\\
+		&= \frac{a}{n^2}{\bf J}_n + \frac{b}{n^2}{\bf J}_n^2\\
+		&= \frac{a}{n^2}{\bf J}_n + \frac{b}{n}{\bf J}_n \text{ (since }\frac{{\bf J}_n}{n} \text{ is idempotent})\\
+		&= \frac{{\bf J}_n}{n}(\frac{a}{n} + b)
+	\end{align*}
+	In order for $\bar{{\bf y}}^2 ={\bf y}'\frac{{\bf J}_n}{n^2}{\bf y} = {\bf y}'{\bf A}{\bf y} $ to have $\chi^2$ distribution, we need ${\bf A}{\bf \Sigma}$ to be idempotent. \vskip 2mm
+	We have:
+	\begin{align*}
+		({\bf A}{\bf \Sigma})^2 &= \Big(\frac{{\bf J}_n}{n}(\frac{a}{n} + b)\Big)^2= \Big(\frac{{\bf J}_n}{n}\Big)^2\Big(\frac{a}{n} + b\Big)^2\\
+		&= \frac{{\bf J}_n}{n}\Big(\frac{a}{n} + b\Big)^2
+	\end{align*}
+	So in order to have 
+	\begin{align*}
+		{\bf A}{\bf \Sigma} = ({\bf A}{\bf \Sigma})^2
+	\end{align*}
+	we need
+	\begin{align*}
+		\frac{a}{n} + b = \Big(\frac{a}{n} + b\Big)^2
+	\end{align*}
+	If $\frac{a}{n} + b = 0$, then $a + bn = 0$, which violate the necessary condition we discussed above that $a + bn > 0$ in order for $a{\bf I}_n +b{\bf J}_n$ to be positive definite.\vskip 2mm
+	So the only choice we have is
+	\begin{align*}
+		\frac{a}{n} + b = 1 \text{ and } a > 0 (\text{ discussed above for why})
+	\end{align*}
+	also, when $\frac{a}{n} + b = 1$, we have $a + bn = n > 0$, which complies with the condition we derived above.\vskip 2mm
+	So the final answer for this question is, we need:
+	\begin{align*}
+		\frac{a}{n} + b = 1 \text{ and } a > 0
+	\end{align*}
+	 in order for $\bar{{\bf y}}^2$ to be chi square distributed. This also implies that $b < 1$ otherwise we could not guarantee $a > 0$, but otherwise, the choice of $b$ is arbitrary.\vskip 2mm
+	For part $[ii]$:\vskip 2mm
+	We have that:
+	\begin{align*}
+		\hat{\sigma}^2 &= \frac{\sum y_i^2 - n\bar{{\bf y}}^2}{n} = \frac{1}{n}{\bf y}'{\bf y} - \bar{{\bf y}}^2\\
+		&= {\bf y}'\frac{{\bf I}_n}{n}{\bf y} - {\bf y}'\frac{{\bf J}_n}{n^2}{\bf y}\\
+		&= {\bf y}'\Big(\frac{{\bf I}_n}{n} - \frac{{\bf J}_n}{n^2}\Big){\bf y}
+	\end{align*}
+	So $\hat{\sigma}^2$ is a quadratic form ${\bf y}'{\bf A}{\bf y}$ with ${\bf A} = \frac{{\bf I}_n}{n} - \frac{{\bf J}_n}{n^2}$. Meanwhile the variance matrix for ${\bf y}$ is ${\bf \Sigma} = a{\bf I}_n + b{\bf J}_n$, so we have:
+	\begin{align*}
+		{\bf A}{\bf \Sigma} &= \Big(\frac{{\bf I}_n}{n} - \frac{{\bf J}_n}{n^2}\Big)\Big(a {\bf I}_n + b{\bf J}_n\Big)\\
+		&= \frac{a}{n}{\bf I}_n +\frac{b}{n}{\bf J}_n - \frac{a}{n^2}{\bf J}_n - \frac{b}{n}{\bf J}_n\\
+		&= \frac{a}{n}{\bf I}_n - \frac{a}{n^2}{\bf J}_n\\
+		&= \frac{a}{n}\Big({\bf I}_n - \frac{1}{n}{\bf J}_n\Big)
+	\end{align*}
+	Thus 
+	\begin{align*}
+		({\bf A}{\bf \Sigma})^2 &= \frac{a^2}{n^2}\Big({\bf I}_n - \frac{1}{n}{\bf J}_n\Big)^2\\
+		&= \frac{a^2}{n^2}\Big({\bf I}_n - \frac{2}{n}{\bf J}_n + \frac{1}{n}{\bf J}_n\Big)\\
+		&= \frac{a^2}{n^2}\Big({\bf I}_n - \frac{1}{n}{\bf J}_n\Big)
+	\end{align*}
+	So in order to have ${\bf A}{\bf \Sigma} = ({\bf A}{\bf \Sigma})^2$, we need
+	\begin{align*}
+		\frac{a}{n}(1 - \frac{a}{n}) = 0
+	\end{align*}
+	So we need
+	\begin{align*}
+		&\ \frac{a}{n} = 0 \Longrightarrow a = 0 (\text{ which we can't do since } a > 0)\\
+		&\text{or } 1 - \frac{a}{n} = 0 \Longrightarrow a = n
+	\end{align*}
+	Since we also need $a + bn >0$, while here we need $a = n$, this implies that
+	\begin{align*}
+		n + bn > 0 \Longrightarrow n(b+ 1) > 0 \Longrightarrow b > -1
+	\end{align*}
+	So the final answer for this one is that we need $a  = n$ and $b >-1$ for $\hat{\sigma}^2$ to be chi square distributed.\vskip 2mm
+	For part $(iii)$:\vskip 2mm
+	We have:
+	\begin{align*}
+		cn\bar{{\bf y}}^2 &= cn y'\frac{{\bf j}{\bf j}'}{n^2}{\bf y} = {\bf y}' \cdot \frac{c{\bf J}_n}{n}\cdot {\bf y}
+	\end{align*}
+	So this is a quadrati form with ${\bf A} = \frac{c{\bf J}_n}{n}$.\vskip 2mm
+	So we have:
+	\begin{align*}
+		{\bf A}{\bf \Sigma} &= \frac{c{\bf J}_n}{n} (a {\bf I}_n + b{\bf J}_n) = ac\frac{{\bf J}_n}{n} + bc\frac{{\bf J}_n^2}{n}\\
+		&= ac\frac{{\bf J}_n}{n} + nbc \cdot \frac{{\bf J}_n^2}{n^2}\\
+		&= ac\cdot \frac{{\bf J}_n}{n} + nbc\cdot \frac{{\bf J}_n}{n}\\
+		&= c(a + nb)\frac{{\bf J}_n}{n}
+	\end{align*}
+	Hence
+	\begin{align*}
+		({\bf A}{\bf \Sigma})^2 &= c^2(a + nb)^2\frac{{\bf J}_n^2}{n^2} = c^2(a + nb)^2\frac{{\bf J}_n}{n}
+	\end{align*}
+	In order for $({\bf A}{\bf \Sigma})^2 = {\bf A}{\bf \Sigma}$, we then need 
+	\begin{align*}
+		c(a + nb) = c^2(a + nb)^2
+	\end{align*}
+	and hence 
+	\begin{align*}
+		c(a + nb) = 0 \text{ or } c(a + nb) = 1
+	\end{align*}
+	we can not take the first case since we already discussed $a + nb > 0$ in order for $a{\bf I}_n + b{\bf J}_n$ to be positive definite, also $c \neq 0$ otherwise $cn\bar{{\bf y}}^2$ is a constant equal to $0$ and can not be chi square distributed.\vskip 2mm
+	So we are left with choice 
+	\begin{align*}
+		c (a + nb) = 1 \Longrightarrow c = \frac{1}{a + nb}
+	\end{align*}
+	Now for ${\bf y}^T({\bf I}_n - d{\bf J}_n){\bf y}$, it is a quadraic form with
+	\begin{align*}
+		{\bf A} &= {\bf I}_n - d{\bf J}_n
+	\end{align*}
+	So we have:
+	\begin{align*}
+		{\bf A}{\bf \Sigma} &= ({\bf I}_n - d{\bf J}_n)(a{\bf I}_n + b{\bf J}_n)\\
+						&= a{\bf I}_n + (b - ad){\bf J}_n - bd{\bf J}_n^2\\
+						&= a{\bf I}_n + n(b - ad)\frac{{\bf J}_n}{n} - n^2bd \frac{{\bf J}_n}{n}\\
+						&= a{\bf I}_n + \Big[nb - nd(a + nb)\Big]\frac{{\bf J}_n}{n}
+	\end{align*}
+	So we have:
+	\begin{align*}
+		({\bf A}{\bf \Sigma})^2 &= \Big(a{\bf I}_n + \Big[nb - nd(a + nb)\Big]\frac{{\bf J}_n}{n}\Big)^2\\
+		&= a^2{\bf I}_n + 2a \Big[nb - nd(a + nb)\Big]\frac{{\bf J}_n}{n} + \Big[nb - nd(a + nb)\Big]^2\frac{{\bf J}_n}{n}\\
+	\end{align*}
+	In order for ${\bf A}{\bf \Sigma}= ({\bf A}{\bf \Sigma})^2$, we need
+	\begin{align*}
+		\left\{\begin{array}{l} a{\bf I}_n = a^2{\bf I}_n\\ nb - nd(a + nb) = 2a\Big[nb - nd(a + nb)\Big] + \Big[nb - nd(a + nb)\Big]^2\end{array}\right.
+	\end{align*}
+	From the first equation, we need $a = a^2$. Since we need $ a>0$ to guarantee the positive definiteness of $a{\bf I}_n + b{\bf J}_n$, so we must have $a = 1$. Plug this result into the second equation, we need
+	\begin{align*}
+		&\ nb - nd(a + nb) = 2\Big[nb - nd(a + nb)\Big] + \Big[nb - nd(a + nb)\Big]^2\\
+		&\Longrightarrow \Big[nb - nd(a + nb)\Big]^2 + \Big[nb - nd(a + nb)\Big] = 0\\
+		&\Longrightarrow \Big(nb - nd(a + nb)\Big)\Big[\Big(nb - nd(a + nb)\Big) + 1\Big] = 0
+	\end{align*}
+	so we need either:
+	\begin{align*}
+		&\ nb - nd(a + nb) = 0\\
+		&\Longrightarrow d = \frac{b}{a + nb}
+	\end{align*}
+	or we need:
+	\begin{align*}
+		&\ nb - nd(a + nb) = -1\\
+		&\Longrightarrow nd(a + nb) = nb + 1\\
+		&\Longrightarrow d = \frac{nb + 1}{n(a + nb)}
+	\end{align*}
+	So to conclude, in order for ${\bf y}^T({\bf I} - d{\bf J}){\bf y}$ to be a chi square random variable, we need
+	\begin{align*}
+		&\ \hskip 2cm  d = \frac{b}{a + nb}\\
+		&\text{ or }\\
+		&\ \hskip 2cm  d = \frac{nb + 1}{n(a + nb)} = \frac{1}{n} (\text{ since } a = 1)
+	\end{align*}
+	and also $a = 1$.
+ \end{sol} 
+
+Question $\# 5$. (Exercise $6.14$ from textbook)
+\begin{sol}
+	All solutions for this question is computed under proc iml of SAS:\vskip 2mm
+	We manually created .csv file for the data, and read it into SAS:
+	\begin{center}
+		\includegraphics[width = 14cm]{Q501.jpg}
+	\end{center}
+	We then start proc iml and import the data from the dataset we created. 
+	\begin{center}
+		\includegraphics[width = 14cm]{Q502.jpg}
+	\end{center}
+	For part $(a)$:\vskip 2mm
+	We compute the estimate of $\hat{{\bf \beta}} = (\hat{\beta}_0, \hat{\beta}_1)'$ with the following code:
+	\begin{center}
+		\includegraphics[width = 10cm]{Q503.jpg}
+	\end{center}
+	The output is:
+	\begin{center}
+		\includegraphics[width = 8cm]{Q504.jpg}
+	\end{center}
+	which is our $\hat{\beta}_0$ ad $\hat{\beta}_1$.\vskip 2mm.
+	For part $(b)$:\vskip 2mm
+	We test on hypothesis $H_0: \beta_1 = 0$ versus $H_1: \beta_1 \neq 0$ by using the statistic:
+	\begin{align*}
+		t = \frac{\hat{\beta}_1}{\sqrt{\frac{\sum (y_i  -\hat{y}_i)^2}{n - 2}}\cdot /\sqrt{\sum(x_i- \bar{x})^2}} =  \frac{\hat{\beta}_1}{\sqrt{\text{MSE}} /\sqrt{\sum(x_i- \bar{x})^2}}
+	\end{align*}
+	Under the null we have $t \sim t(n - 2)$ while here $n = 53$.
+	We have the following code to compute the $t$ value and corresponding two-sided p-value:
+	\begin{center}
+		\includegraphics[width = 10cm]{Q505.jpg}
+	\end{center}
+	The output is:
+	\begin{center}
+		\includegraphics[width = 7.5cm]{Q506.jpg}
+	\end{center}
+	Since $p$ value is highly significant here, we reject the null and conclude that there is a linear association between the interval to the next eruption and the duration of an eruption.\vskip 2mm
+	For part $(c)$:\vskip 2mm
+	We use the formula:
+	\begin{align*}
+		\hat{\beta}_1 \pm t_{\alpha/2, n - 2}\sqrt{\text{MSE} /\sum(x_i- \bar{x})^2}
+	\end{align*}
+	with the following SAS code:
+	\begin{center}
+		\includegraphics[width = 10cm]{Q507.jpg}
+	\end{center}
+	The output is:
+	\begin{center}
+		\includegraphics[width = 9cm]{Q508.jpg}
+	\end{center}
+	Finally to compute $r^2$, we use the formula:
+	\begin{align*}
+		r^2 = \frac{\text{SSR}}{\text{SST}} = \frac{\sum(\hat{y}_i - \bar{{\bf y}})^2}{\sum(y_i - \bar{{\bf y}})^2}
+	\end{align*}
+	with the SAS code:
+	\begin{center}
+		\includegraphics[width = 10cm]{Q509.jpg}
+	\end{center}
+	The output is:
+	\begin{center}
+		\includegraphics[width = 6cm]{Q510.jpg}
+	\end{center}
+\end{sol}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
