@@ -1,0 +1,685 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsfonts}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsrefs}
+\usepackage{ulem}
+\usepackage[dvips]{graphicx}
+\usepackage{bm}
+\usepackage{cancel}
+\usepackage{color}
+
+\setlength{\headheight}{26pt}
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+
+\topmargin 0pt
+%Forrest Shortcuts
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{pf}{Proof}
+\newtheorem{sol}{Solution}
+\newcommand{\R}{{\ensuremath{\mathbb R}}}
+\newcommand{\J}{{\ensuremath{\mathbb J}}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\T}{{\mathbb T}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\st}{{\text{\ s.t.\ }}}
+\newcommand{\rto}{\hookrightarrow}
+\newcommand{\rtto}{\hookrightarrow\rightarrow}
+\newcommand{\tto}{\to\to}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\ep}{\epsilon}
+%CJ shortcuts
+\newcommand{\thin}{\thinspace}
+\newcommand{\beps}{\boldsymbol{\epsilon}}
+\newcommand{\bwoc}{by way of contradiction}
+
+%Munkres formatting?
+%\renewcommand{\theenumii}{\alph{enumi}}
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\theenumii}{\alph{enumii}}
+\renewcommand{\labelenumii}{(\theenumii)}
+
+\title{HW4}
+\author{Guanlin Zhang}
+
+\lhead{Dr Milind Phadnis
+ \\BIOS 900} \chead{}
+\rhead{Guanlin Zhang\\Fall '17} \pagestyle{fancyplain}
+%\maketitle
+
+\begin{document}
+Question $\# 1$.
+\begin{sol}
+	For part $(a)$:\vskip 2mm
+	We can check the rank of $X$ by doing the Gaussian elimination:
+	\begin{align*}
+		X = \left[\begin{array}{cccc} 1&0&-50&2500\\ 1&0&0&0\\ 1&0&50&2500\\ 0&1&-50&2500\\0 &1&0&0\\ 0&1&50&2500\end{array}\right]\Longrightarrow \left[\begin{array}{cccc}1 &0&0&0\\ 0&1&0&0\\ 0&0&-50&2500\\ 0&0&0&2500\end{array}\right]
+	\end{align*}
+	So the rank of $X$ is $4$ (full rank) and hence for any function of $\beta$ with the form:
+	\begin{align*}
+		\lambda'\beta = \lambda'\left[\begin{array}{c}\gamma_1\\ \gamma_2 \\ \delta_1\\ \delta_2 \end{array}\right]
+	\end{align*}
+  $\lambda'$ is in the row space of $X$ and hence $\lambda'\beta$ is estimable. So $\gamma_1 - 10\delta_1 + 100\delta_2$ is also estimable.\vskip 2mm
+  For part $(b)$:\vskip 2mm
+  we have:
+  \begin{align*}
+  	\mu + \alpha_1 = (1, 1, 0, 0, 0)'\left[\begin{array}{ccccc} \mu\\ \alpha_1\\ \alpha_2\\ \beta_1\\ \beta_2 \end{array}\right]
+  \end{align*}
+  and notice that
+  \begin{align*}
+  	(1, 1, 0, 0, 0)&= \frac{1}{3}(1,1, 0, -1, 1) + \frac{1}{3}(1, 1, 0, 0, -2) + \frac{1}{3}(1, 1, 0, 1, 1)
+  \end{align*}
+  i.e. $(1, 1, 0, 0, 0)$ is the linear combination of the first 3 rows of $X$, hence $\mu + \alpha_1$ is estimable.\vskip 2mm
+  For part $(c)$:\vskip 2mm
+  The square sum of the residuals are:
+  \begin{align*}
+  	&\ ({\bf Y} - {\bf X}{\bf b})^T({\bf Y} - {\bf X}{\bf b}) = {\bf Y}'{\bf Y} - 2{\bf b}'{\bf X}'{\bf Y} + {\bf b}'{\bf X}'{\bf X}{\bf b}\\
+  \end{align*}
+  Set the derivative on ${\bf b}$ to ${\bf 0}$:
+  \begin{align*}
+  	&\ -2{\bf X}'{\bf Y} + 2{\bf X}'{\bf X}{\bf b} = 0\\
+  	&\Longrightarrow {\bf X}'{\bf X}{\bf b} = {\bf X}'{\bf Y}\\
+  	&\Longrightarrow {\bf b} = ({\bf X}'{\bf X})^{-}{\bf X}'{\bf Y}
+  \end{align*}
+  To compute the generalized inverse $({\bf X}'{\bf X})^{-}$, we can follow the following $5$ steps as suggested on page $35$ of textbook:\vskip 2mm
+  \begin{enumerate}
+  	\item Find any nonsingular $k \times k$ submatrix ${\bf C}$ of ${\bf X}'{\bf X}$ (the rank of ${\bf X}'{\bf X}$ is $k < p \leq n$). It is not necessary that the elements of ${\bf C}$ occupy adjacent rows and columns.
+  	\item Find ${\bf C}^{-1}$ and $({\bf C}^{-1})'$.
+  	\item Replace the elements of ${\bf C}$ by the elements of $({\bf C}^{-1})'$
+  	\item Replace all other elements in ${\bf X}'{\bf X}$ by zeros.
+  	\item Transpose the resulting matrix.
+  \end{enumerate}
+  For part $(d)$:\vskip 2mm
+  The estimator $\hat{\alpha}_1 - \hat{\alpha}_2 = [0 ,1 -1 ,0, 0]{\bf b}$ has the following properties:
+  \begin{enumerate}
+  	\item the estimator does not depend on the choice of $({\bf X}'{\bf X})^{-}$, or in other words, it is invariant to the choice of $({\bf X}'{\bf X})^{-}$.
+  	\item the estimator is BLUE (best linear unbiased estimator) of $[0, 1, -1, 0, 0]{\bf \beta}$
+  \end{enumerate}
+  For part $(e)$:\vskip 2mm
+  To see if model 1 and model 2 produce the same SSE, we just need to check if they are reparametrization of each other, in other words, we need to check if the columns of the design matrix in one model is in the column space of the design matrix from the other model.\vskip 2mm
+  We can easily notice that for model $1$, column $1$ is the same as column $2$ of model 2, column $2$ of model $1$ is the same as column $3$ of model $2$, and column $3$ of model $1$ is equivalent to $(-1, 0, 1, -1, 0, 1)'$, which is the same as column $4$ of model $2$. Finally for model $1$, column $4$ is equivalent to $(1, 0, 1, 1, 0, 1)'$. If we look at model $2$, we can do:
+  \begin{align*}
+  	\text{colum }2 \times 2 + \text{column }3 \times 2 + \text{column 5} = (3, 0, 3, 3, 0, 3)'
+  \end{align*} 
+  which is also equivalent to $(1,0, 1, 1, 0, 1)'$.\vskip 2mm
+  Thus we have showed that all columns in the design matrix of column $1$ are also in the column space of design matrix for model $2$, so these two models they are reparametrization of each other, and hence they have the same $SSE$.\vskip 2mm
+  For part $(f)$:\vskip 2mm
+  Since model $1$ has a design matrix that is full rank (rank is $4$), the procedure of finding the prediction confidence interval would be just the same as what we have done before in Chapter 8 for multiple linear regression model.\vskip 2mm
+  We have:
+  \begin{align*}
+  	{\bf x}_0' = (1, 0,  -30, 900)
+  \end{align*}
+  which represents variety $1$ with nitrogen level $120$.\vskip 2mm
+  So
+  \begin{align*}
+	\hat{y}_0 = {\bf x}_0' \hat{{\bf \gamma}} = (1, 0, -30, 900)\hat{{\bf \gamma}}
+  \end{align*}
+  We have estimation for $\sigma^2$ as:
+  \begin{align*}
+  	\hat{\sigma^2} = s^2 = \frac{SSE}{6 - 4} = \frac{SSE}{2} = \frac{1}{2}{\bf y}'\Big[{\bf I} - {\bf W}({\bf W}'{\bf W})^{-1}{\bf W}'\Big]{\bf y}
+  \end{align*}
+  according to Theorem 12.3g we have:
+  \begin{align*}
+  	\hat{{\bf \gamma}} \sim N_4(\gamma, \sigma^2\Big({\bf W}'{\bf W}\Big)^{-1})
+  \end{align*}
+  \begin{align*}
+  	(6 - 4)s^2/\sigma^2 \sim \chi^2(6 - 4)
+  \end{align*}
+  and $\hat{\bf \gamma}$ and $s^2$ are independent.\vskip 2mm
+  For prediction, we have:
+  \begin{align*}
+  	\text{var}(y_0 - \hat{y}_0) &= \text{var}({\bf x}'_0{\bf \gamma} + \epsilon_0 - {\bf x}'_0\hat{{\bf \gamma}})\\
+  	&= \text{var}(\epsilon_0) + \text{var}({\bf x}'_0\hat{{\bf \gamma}}) = \sigma^2 + \sigma^2{\bf x}_0'({\bf W}'{\bf W})^{-1}{\bf x}_0\\
+  	&= \sigma^2\left[1 + {\bf x}_0'({\bf W}'{\bf W})^{-1}{\bf x}_0 \right]
+  \end{align*}
+  which is estimated by 
+  \begin{align*}
+  	s^2\left[1 + {\bf x}_0'({\bf W}'{\bf W})^{-1}{\bf x}_0 \right]
+  \end{align*}
+  We have:
+  \begin{align*}
+  	t = \frac{y_0  - \hat{y}_0}{s\sqrt{1 + {\bf x}_0'({\bf W}'{\bf W})^{-1}{\bf x}_0 }} \sim t(6 - 4) = t(2)
+  \end{align*}
+  So the $95\%$ prediction interval would be:
+  \begin{align*}
+  	y_0 \in \Big(\hat{y}_0 - t_{0.025, 2}s\sqrt{1 + {\bf x}_0'({\bf W}'{\bf W})^{-1}{\bf x}_0 }, \hat{y}_0 + t_{0.025, 2}s\sqrt{1 + {\bf x}_0'({\bf W}'{\bf W})^{-1}{\bf x}_0 }\Big)
+  \end{align*}
+  We have:
+  \begin{align*}
+  	&\ t_{0.025, 2} = 4.302653\\
+  	&\ {\bf x}_0'({\bf W}'{\bf W})^{-1}{\bf x}_0 = 0.4938667
+  \end{align*}
+  Plug these into the above, we got
+  \begin{align*}
+  	y_0 \in \Big(\hat{y}_0 - 5.259\times s, \hat{y}_0 + 5.259 \times s\Big)
+  \end{align*}
+  Here 
+  \begin{align*}
+  	\hat{y}_0 &= (1, 0, -30, 900)\Big({\bf W}'{\bf W}\Big)^{-1}{\bf W}'{\bf y}\\
+  	s &= \sqrt{\frac{1}{2}{\bf y}'\Big[{\bf I} - {\bf W}({\bf W}'{\bf W})^{-1}{\bf W}'\Big]{\bf y}}
+  \end{align*}
+  they are related to data. Since we do not have information for data, we could not get a specific value for the prediction interval.
+  The relevant SAS code for some of the computation above is here:
+  \begin{center}
+  	\includegraphics[width = 8cm]{q101.jpg}
+  \end{center}
+  For part $(g)$:\vskip 2mm
+  We have a general linear hypothesis: $H_0: {\bf C}{\bf \gamma} = 0$ with
+  \begin{align*}
+  	{\bf C} &= \left[\begin{array}{cccc} 1&-1&0&0\\ 0&0&0&1\end{array}\right]
+  \end{align*}
+  We have:
+  \begin{align*}
+  	F^{\ast} &= \frac{SSH/2}{SSE/4} \sim F(2, 4)  \text{ under null hypothesis}
+  \end{align*}
+  with 
+  \begin{align*}
+  	SSH &= ({\bf C}\hat{\gamma})'\Big[{\bf C}({\bf W}'{\bf W})^{-1}{\bf C}'\Big]^{-1}{\bf C}\hat{\gamma}\\
+  	SSE &= {\bf y}'\Big[{\bf I} - {\bf W}({\bf W}'{\bf W})^{-1}{\bf W}'\Big]{\bf y}\\
+  	\hat{{\bf \gamma}} &= \Big({\bf W}'{\bf W}\Big)^{-1}{\bf W}'{\bf y}
+  \end{align*}
+  Notice here we have a full rank design matrix so everything is just the same as in chapter 8. We reject the null hypothesis when $F^{\ast}$ as defined above has large value.\vskip 2mm
+  Thus completed the solution of Question $1$.
+\end{sol}
+
+Question $2$.
+\begin{sol}
+	For part $(a)$:\vskip 2mm
+	Since our design matrix is:
+	\begin{align*}
+			X = \left[\begin{array}{cccc}1&1&0&0\\ 1&1&0&0\\ 1&0&1&0\\ 1&0&1&0\\ 1&0&1&0\\ 1&0&1&0\\ 1&0&0&1\\1&0&0&1 \end{array}\right], \hskip 1cm \beta = \left[\begin{array}{c} \mu\\ \alpha_1 \\ \alpha_2\\ \alpha_3\end{array}\right]
+	\end{align*}
+	The null hypotheses are corresponding to ${\bf C}\beta = 0$ with
+	\begin{align*}
+		{\bf C}_1 &= (0, 1, -1, 0) = \text{row 2 of X} - \text{row 3 of X}\\
+		{\bf C}_2 &= (0, 0, 0, 1) \hskip 1cm \text{not in the row space of }{\bf X}\\
+		{\bf C}_3 &= (1, 0, 0, 0) \hskip 1cm \text{not in the row space of }{\bf X}\\
+		{\bf C}_4 &= \left[\begin{array}{cccc} 0&1&0&-1\\ 0&1&-2&1\end{array}\right] = \left[\begin{array}{c}\text{row 2} - \text{row 7} \\ \text{row 2} - 2\times\text{ row 3} + \text{row 7}\end{array}\right] \text{ and independent}
+	\end{align*}
+	So we can conclude that $(i) H_0: \alpha_1 = \alpha_2$ and $(iv) H_0: \alpha_1 = \alpha_3 \text{ and } \alpha_1 - 2\alpha_2 + \alpha_3 = 0$ are testable. However $(ii) H_0: \alpha_3 = 0$ and $(iii) H_0: \mu = 0$ are not testable.\vskip 2mm
+	For part $(b)$:\vskip 2mm
+	Notice that the rank of ${\bf X}$ is $3$, so 
+	\begin{align*}
+		\frac{1}{\sigma^2}{\bf Y}^T({\bf I} - {\bf P}_{{\bf X}}){\bf Y} = \frac{SSE}{\sigma^2} \sim \chi^2(n - k) = \chi^2(8 - 3) = \chi^2(5)
+	\end{align*}
+	For part $(c)$:\vskip 2mm
+	Our null hypothesis is $H_0: \alpha_1 = \alpha_3 \text{ and }\alpha_1 - 2\alpha_2 + \alpha_3= 0$ (the pdf file about $(a)$(iv) says it is $\alpha_1 = \alpha_2$ . I believe it is a typo, because that way the algebra will be much more difficult)\vskip 2mm
+	There are different ways to do this problem. We can either use side conditions to get estimate for both full and reduced model, or we can first reparametrize to make the design matrix with full rank, and get estimate for full and reduced model.\vskip 2mm
+	The example of the book in section $12.8$ did the first way, so I am going to try the second way.\vskip 2mm
+	From homework $3$, we reparametrize the model by letting $\alpha_i^{\ast} = \mu + \alpha_i$, and we have the reparametrized model as:
+	\begin{align*}
+		y_{ij} = \alpha_i^{\ast} + \epsilon_{ij}
+	\end{align*}
+	and the new design matrix is:
+	\begin{align*}
+		{\bf X}^{\ast} &= \left[\begin{array}{ccc} 1&0&0\\ 1&0&0\\ 0&1&0\\ 0&1&0\\ 0&1&0\\ 0&1&0\\ 0&0&1\\ 0&0&1\end{array}\right]
+	\end{align*}
+	and we have the equivalent null hypothesis as $H_0: \alpha_1^{\ast} = \alpha_3^{\ast}$ and $\alpha_1^{\ast} - 2\alpha_2^{\ast} + \alpha_3^{\ast} = 0$\vskip 2mm
+	We could use  Theorem $12.7b$ if we see this as a general linear hypothesis. Since we don't have data, we try another way instead of using matrix language.\vskip 2mm
+	For the full model, we did in homework $3$ and got:
+	\begin{align*}
+		\hat{\beta}^{\ast} &= \left[\begin{array}{c} \hat{\alpha}^{\ast}_1\\ \hat{\alpha}^{\ast}_2\\ \hat{\alpha}^{\ast}_3\end{array}\right]
+		= \left[\begin{array}{c} \hat{\mu} +  \hat{\alpha}_1\\ \hat{\mu} + \hat{\alpha}_2\\ \hat{\mu} + \hat{\alpha}_3\end{array}\right] = \Big(({\bf X}^{\ast})'{\bf X}^{\ast}\Big)^{-1}({\bf X}^{\ast})'{\bf y}\\
+		&= \left[\begin{array}{cccccccc} \frac{1}{2}&\frac{1}{2}&&&&&&\\ &&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&&\\ &&&&&&\frac{1}{2}&\frac{1}{2}\end{array}\right]{\bf y}\\
+		&= \left[\begin{array}{c} \frac{1}{2}Y_{11} + \frac{1}{2}Y_{12}\\ \frac{1}{4}(Y_{21} + Y_{22} + Y_{23} + Y_{24})\\ \frac{1}{2}(Y_{31} + Y_{32})\end{array}\right] = \left[\begin{array}{c} \overline{{\bf y}}_{1\cdot}\\ \overline{{\bf y}}_{2\cdot}\\ \overline{{\bf y}}_{3\cdot}\end{array}\right]
+	\end{align*}
+	Thus we have:
+	\begin{align*}
+		SSE &= {\bf y}'{\bf y} - \hat{\beta^{\ast}}'{\bf X^{\ast}}'{\bf y} \\
+		&= \sum_{ij}y_{ij}^2 - [ \overline{{\bf y}}_{1\cdot}, \overline{{\bf y}}_{2\cdot}, \overline{{\bf y}}_{3\cdot}]\left[\begin{array}{cccccccc} 1&1&0&0&0&0&0&0\\ 0&0&1&1&1&1&0&0\\ 0&0&0&0&0&0&1&1\end{array}\right]\left[\begin{array}{c} y_{11}\\ y_{12}\\ y_{21} \\ y_{22}\\y_{23}\\y_{24}\\y_{31}\\y_{32} \end{array}\right]\\
+		&= \sum_{ij}y_{ij}^2 - [ \overline{{\bf y}}_{1\cdot}, \overline{{\bf y}}_{2\cdot}, \overline{{\bf y}}_{3\cdot}]\left[\begin{array}{c} y_{1\cdot}\\ y_{2\cdot}\\ y_{3\cdot}\end{array}\right]\\
+		&= \sum_{ij}y_{ij}^2 - \Big(2 \overline{{\bf y}}_{1\cdot}^2 + 4 \overline{{\bf y}}_{2\cdot}^2 + 2\overline{{\bf y}}_{3\cdot}^2\Big) \text{ with degree of freedom } 8 - 3 = 5
+	\end{align*}
+	On the other hand, for reduced model, we have $\alpha_1^{\ast} = \alpha_3^{\ast}$ and $\alpha_1^{\ast} - 2\alpha_2^{\ast} + \alpha_3^{\ast} = 0$, we can plug this into the model and we got:
+	\begin{align*}
+		\alpha_1^{\ast} = \alpha_2^{\ast} = \alpha_3^{\ast} = \alpha^{\ast}
+	\end{align*}
+	and hence the reduced model is:
+	\begin{align*}
+		y_{ij}  = \alpha^{\ast} + \epsilon_{ij}
+	\end{align*}
+	the design matrix is:
+	\begin{align*}
+		{\bf X}_{reduce}^{\ast} = \left[\begin{array}{c} 1\\ 1\\ 1\\ 1\\ 1\\ 1\\ 1\\ 1\end{array}\right]
+	\end{align*}
+	and we have the estimate:
+	\begin{align*}
+		\hat{\alpha}^{\ast} &= ({\bf X^{\ast}}_{reduce}'{\bf X^{\ast}}_{reduce})^{-1}{\bf X^{\ast}}_{reduce}'{\bf y} = \frac{1}{8}{\bf y}_{\cdot\cdot} = \overline{{\bf y}}_{\cdot\cdot}
+	\end{align*}
+	Hence we have:
+	\begin{align*}
+		SS(\alpha_1^{\ast}, \alpha_2^{\ast}, \alpha_3^{\ast}|\alpha^{\ast}) &= \hat{\beta^{\ast}}'{\bf X^{\ast}}'{\bf y}  - \alpha^{\ast}{\bf X^{\ast}}'_{reduce}{\bf y}\\
+		&= \Big(2 \overline{{\bf y}}_{1\cdot}^2 + 4 \overline{{\bf y}}_{2\cdot}^2 + 2\overline{{\bf y}}_{3\cdot}^2\Big) - 8\overline{{\bf y}}_{\cdot\cdot}^2 \text{ with degree of freedom } 2
+	\end{align*}
+	So the F statistic is:
+	\begin{align*}
+		F^{\ast} &= \frac{SS(\alpha_1^{\ast}, \alpha_2^{\ast}, \alpha_3^{\ast}|\alpha^{\ast})/2}{SSE/5} = \frac{\Big[\Big(2 \overline{{\bf y}}_{1\cdot}^2 + 4 \overline{{\bf y}}_{2\cdot}^2 + 2\overline{{\bf y}}_{3\cdot}^2\Big) - 8\overline{{\bf y}}_{\cdot\cdot}^2\Big]/2}{\Big[\sum_{ij}y_{ij}^2 - \Big(2 \overline{{\bf y}}_{1\cdot}^2 + 4 \overline{{\bf y}}_{2\cdot}^2 + 2\overline{{\bf y}}_{3\cdot}^2\Big)\Big]/5}
+	\end{align*}
+	It follows central $F(2, 5)$ distribution under the null hypothesis and large value of $F^{\ast}$ is evidence against the null.\vskip 2mm
+	For part $(d)$:\vskip 2mm
+	We can use Theorem $12.7b$, under the reparametrized model, our null hypothesis is ${\bf C}^{\ast}\beta^{\ast} = 0$ where
+	\begin{align*}
+		{\bf C}^{\ast} &= \left(\begin{array}{ccc} 1&0&-1\\ 1&-2&1\end{array}\right)
+	\end{align*}
+	So the noncentral parameter is:
+	\begin{align*}
+		\lambda &= \Big({\bf C}^{\ast}{\bf \beta}^{\ast}\Big)'\Big[{\bf C}^{\ast}\Big({\bf X^{\ast}}'{\bf X^{\ast}}\Big)^{-1}{\bf C^{\ast}}'\Big]^{-1}{\bf C^{\ast}}{\bf \beta^{\ast}}/2\sigma^2\\
+		&= (\alpha_1^{\ast} - \alpha_3^{\ast}, \alpha^{\ast}_1 - 2\alpha^{\ast}_2 + \alpha^{\ast}_3)\left[\left(\begin{array}{ccc} 1&0&-1\\ 1&-2&1\end{array}\right)\left[\begin{array}{ccc} \frac{1}{2}&&\\ &\frac{1}{4}&\\ &&\frac{1}{2}\end{array}\right]\left(\begin{array}{cc} 1&1\\0 &-2\\ -1&1\end{array}\right)\right]^{-1}\\
+		&\ \hskip 2cm \times\left[\begin{array}{c} \alpha_1^{\ast} - \alpha_3^{\ast}\\ \alpha^{\ast}_1 - 2\alpha^{\ast}_2 + \alpha^{\ast}_3)\end{array}\right]\Big/(2\sigma^2)\\
+		&= (\alpha_1^{\ast} - \alpha_3^{\ast}, \alpha^{\ast}_1 - 2\alpha^{\ast}_2 + \alpha^{\ast}_3)\Big[\begin{array}{cc} 1&0 \\ 0&2 \end{array}\Big]^{-1}\left[\begin{array}{c} \alpha_1^{\ast} - \alpha_3^{\ast}\\ \alpha^{\ast}_1 - 2\alpha^{\ast}_2 + \alpha^{\ast}_3)\end{array}\right]\Big/(2\sigma^2)\\
+		&= (\alpha_1^{\ast} - \alpha_3^{\ast}, \alpha^{\ast}_1 - 2\alpha^{\ast}_2 + \alpha^{\ast}_3)\Big[\begin{array}{cc} 1&0 \\ 0&\frac{1}{2} \end{array}\Big]\left[\begin{array}{c} \alpha_1^{\ast} - \alpha_3^{\ast}\\ \alpha^{\ast}_1 - 2\alpha^{\ast}_2 + \alpha^{\ast}_3)\end{array}\right]\Big/(2\sigma^2)\\
+		&= \Big[(\alpha_1^{\ast} - \alpha_3^{\ast})^2 + \frac{1}{2}(\alpha_1^{\ast} - 2\alpha_2^{\ast} + \alpha_3^{\ast})^2\Big]/(2\sigma^2)\\
+		&= \Big[(\alpha_1 - \alpha_3)^2 + \frac{1}{2}(\alpha_1 - 2\alpha_2 + \alpha_3)^2\Big]/(2\sigma^2)
+	\end{align*}
+\end{sol}
+
+Question $3$
+\begin{sol}
+Our goal is to find the orthogonal polynomial coefficients for $k = 5$.\vskip 2mm
+Since our treatment levels are equally spaced, without loss of generality we could assume $x_1 = 1, x_2 = 2, x_3= 3, x_4 = 4, x_5 = 5$, and our polynomial regression model for the given data is:
+\begin{align*}
+	y_{ij} &= \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3x_i^3 + \beta_4x_i^4 + \epsilon_{ij}
+\end{align*}
+Here $i = 1, 2, 3, 4,  5, j = 1, 2, \ldots, n$.\vskip 2mm
+We want to show that the tests on the $\beta'$s above can be carried out using orthogonal contrasts on the means $\bar{y}_{i\cdot}$ that are estimates of $\mu_i$ in the ANOVA model:
+\begin{align*}
+	y_{ij} &= \mu + \alpha_i + \epsilon_{ij} = \mu_{i} + \epsilon_{ij}, \hskip 1cm i = 1, 2, 3, 4, j = 1, 2, \ldots, n
+\end{align*}
+Our design matrix in the polynomial regression model is:
+\begin{align*}
+	{\bf X} = \left[\begin{array}{ccccc} 1&1&1^2&1^3&1^4\\ \vdots&\vdots&\vdots&\vdots&\vdots\\
+	1&1&1^2&1^3&1^4\\ 1 &2&2^2&2^3&2^4\\ \vdots&\vdots&\vdots&\vdots&\vdots\\
+	1&2&2^2&2^3&2^4\\ 1&3&3^2&3^3&3^4\\ \vdots&\vdots&\vdots&\vdots&\vdots \\
+	1&3&3^2&3^3&3^4\\ 1&4&4^2&4^3&4^4\\ \vdots&\vdots&\vdots&\vdots&\vdots\\ 1&4&4^2&4^3&4^4\\ 1&5&5^2&5^3&5^4\\ \vdots&\vdots&\vdots&\vdots&\vdots\\ 1&5&5^2&5^3&5^4 \end{array}\right]
+\end{align*}
+We regress the second column of ${\bf X}$, denoted as ${\bf x}_1$, on the first column, denoted as ${\bf x}_0$, and orthogonize the first column by Gram-Schmidt process:
+\begin{align*}
+	{\bf x}_{1\cdot 0} &= {\bf x}_1 - {\bf x}_0({\bf x}'_0{\bf x}_0)^{-1}{\bf x}'_0{\bf x}_1\\
+	&= {\bf x}_1 - {\bf j}({\bf j}'{\bf j})^{-1}{\bf j}'{\bf x}_1 ={\bf x}_1 - {\bf j}(5n)^{-1}n\sum_{i = 1}^{5}x_i\\
+	&= {\bf x}_1 - \bar{x}{\bf j}\\
+	&= {\bf x}_1 - 3{\bf j}\\
+	&= (-2, \ldots, -2, -1, \ldots, -1, 0, \ldots, 0, 1, \ldots, 1, 2, \ldots, 2)'
+\end{align*}
+We repreat this process similarly by regressing column ${\bf x}_2$ on ${\bf x}_0$ and ${\bf x}_{1\cdot 0}$ and orthogonize ${\bf x}_2$ by Gram-Schmidt process:
+\begin{align*}
+	{\bf x}_{2\cdot 01} &= {\bf x}_2 - \frac{{\bf j}'{\bf x}_2}{{\bf j}'{\bf j}}{\bf j} - \frac{{\bf x}'_{1\cdot 0}{\bf x}_2}{{\bf x}'_{1\cdot 0}{\bf x}_{1\cdot 0}}{\bf x}_{1\cdot 0}
+\end{align*}
+We have:
+\begin{align*}
+	\frac{{\bf j}'{\bf x}_2}{{\bf j}'{\bf j}} &= \frac{n\sum_{i = 1}^5x_i^2}{5n} = \frac{\sum_{i = 1}^{5}i^2}{5} = \frac{55}{5} = 11
+\end{align*}
+and
+\begin{align*}
+	\frac{{\bf x}'_{1\cdot 0}{\bf x}_2}{{\bf x}'_{1\cdot 0}{\bf x}_{1\cdot 0}} &= \frac{n[-2(1^2) -1(2^2) + 0(3^2) + 1(4^2) + 2(5^2)]}{n[(-2)^2 + (-1)^2 + 0^2 + 1^2 + 2^2]}\\
+	&= \frac{60}{10} = 6
+\end{align*}
+So we got:
+\begin{align*}
+	{\bf x}_{2\cdot 01} &= {\bf x}_2 - 11{\bf j} -6{\bf x}_{1\cdot 0}\\
+	&= (1^2, \ldots, 1^2, 2^2, \ldots, 2^2, 3^2, \ldots, 3^2, 4^2, \ldots, 4^2, 5^2, \ldots, 5^2)'\\
+	&- (11, \ldots, 11, 11, \ldots, 11, 11, \ldots, 11, 11, \ldots, 11, 11, \ldots, 11)'\\
+	&- (-12, \ldots, -12, -6, \ldots, -6, 0, \ldots, 0, 6, \ldots, 6, 12, \ldots, 12)'\\
+	&= (2, \ldots, 2, -1, \ldots, -1, -2, \ldots, -2, -1, \ldots, -1, 2, \ldots, 2)'
+\end{align*}
+Continue we have:
+\begin{align*}
+	{\bf x}_{3\cdot 012} &= {\bf x}_3 - \frac{{\bf j}'{\bf x}_3}{{\bf j}'{\bf j}}{\bf j} - \frac{{\bf x}'_{1\cdot 0}{\bf x}_3}{{\bf x}'_{1\cdot 0}{\bf x}_{1\cdot 0}}{\bf x}_{1\cdot 0} - \frac{{\bf x}'_{2\cdot 01}{\bf x}_3}{{\bf x}'_{2\cdot 01}{\bf x}_{2\cdot 01}}{\bf x}_{2\cdot 01}\\
+\end{align*}
+with
+\begin{align*}
+	\frac{{\bf j}'{\bf x}_3}{{\bf j}'{\bf j}} &= \frac{n\sum_{i = 1}^{n}i^3}{5n} = \frac{\sum_{i = 1}^{5}i^3}{5} = \frac{225}{5} = 45
+\end{align*}
+\begin{align*}
+	\frac{{\bf x}_{1\cdot 0}'{\bf x}_3}{{\bf x}'_{1\cdot 0}{\bf x}_{1\cdot 0}} &= 
+	\frac{n[-2(1^3)-1(2^3)+ 0(3^3) + 1(4^3)+ 2(5^3)]}{n[(-2)^2 + (-1)^2 + 0^2 + 1^2 + 2^2]}\\
+	&= \frac{304}{10} = 30.4
+\end{align*}
+\begin{align*}
+	\frac{{\bf x}'_{2\cdot 01}{\bf x}_3}{{\bf x}'_{2\cdot 01}{\bf x}'_{2\cdot 01}} &= 
+	\frac{n[2(1^3) -1(2^3)-2(3^3)-1(4^3) + 2(5^3)]}{n[2^2 + (-1)^2 + (-2)^2 + (-1)^2 + 2^2]}\\
+	&= \frac{126}{14} = 9
+\end{align*}
+So
+\begin{align*}
+	{\bf x}_{3\cdot 012} &= {\bf x}_3 - 45{\bf j} - 30.4{\bf x}_{1\cdot 0} - 9{\bf x}_{2\cdot 01}\\
+	&= (1^3, \ldots, 1^3, 2^3, \ldots, 2^3, 3^3, \ldots, 3^3, 4^3, \ldots, 4^3, 5^3, \ldots, 5^3)'\\
+	&- (45, \ldots, 45, 45, \ldots, 45, 45, \ldots, 45, 45, \ldots, 45, 45, \ldots, 45)'\\
+	&- (-60.8, \ldots, -60.8, -30.4, \ldots, -30.4, 0, \ldots, 0, 30.4, \ldots, 30.4, 60.8, \ldots, 60.8)'\\
+	&- (18, \ldots, 18, -9, \ldots, -9, -18, \ldots, -18, -9, \ldots, -9, 18, \ldots, 18)'\\
+	&= (-1.2, \ldots, -1.2, 2.4, \ldots, 2.4, 0, \ldots, 0, -2.4, \ldots, -2.4, 1.2, \ldots, 1.2)'
+\end{align*}
+and we can rescale it to:
+\begin{align*}
+	{\bf x}_{3\cdot 012} &= (-1, \ldots, -1, 2, \ldots, 2, 0, \ldots, 0, -2, \ldots, -2, 1, \ldots, 1)'
+\end{align*}
+Finally we have:
+\begin{align*}
+	{\bf x}_{4\cdot 0123} &= {\bf x}_4 - \frac{{\bf j}'{\bf x}_4}{{\bf j}'{\bf j}}{\bf j} - \frac{{\bf x}'_{1\cdot 0}{\bf x}_4}{{\bf x}'_{1\cdot 0}{\bf x}_{1\cdot 0}}{\bf x}_{1\cdot 0} - \frac{{\bf x}'_{2\cdot 01}{\bf x}_4}{{\bf x}'_{2\cdot 01}{\bf x}_{2\cdot 01}}{\bf x}_{2\cdot 01} - \frac{{\bf x}'_{3\cdot 012}{\bf x}_4}{{\bf x}'_{3\cdot 012}{\bf x}_{3\cdot 012}}{\bf x}_{3\cdot 012}
+\end{align*}
+We have:
+\begin{align*}
+	 \frac{{\bf j}'{\bf x}_4}{{\bf j}'{\bf j}} &= \frac{n\sum_{i = 1}^{5} i^4}{5n} = \frac{979}{5} = 195.8
+\end{align*}
+\begin{align*}
+	\frac{{\bf x}'_{1\cdot 0}{\bf x}_4}{{\bf x}'_{1\cdot 0}{\bf x}_{1\cdot 0}} 
+	&= \frac{n[-2(1^4)-1(2^4)+ 0(3^4)+ 1(4^4) + 2(5^4)]}{n[(-2)^2 + (-1)^2 + 0^2 + 1^2 + 2^2]}\\
+	&= \frac{1488}{10} = 148.8
+\end{align*}
+\begin{align*}
+	\frac{{\bf x}'_{2\cdot 01}{\bf x}_4}{{\bf x}'_{2\cdot 01}{\bf x}_{2\cdot 01}} &= 
+	\frac{n[2(1^4)-1(2^4)-2(3^4)-1(4^4)+2(5^4)]}{n[2^2 +(-1)^2 + (-2)^2 + (-1)^2 +2^2]}\\
+	&= \frac{818}{14} = \frac{409}{7}
+\end{align*}
+\begin{align*}
+	 \frac{{\bf x}'_{3\cdot 012}{\bf x}_4}{{\bf x}'_{3\cdot 012}{\bf x}_{3\cdot 012}} 
+	 &= \frac{n[-1(1^4)+ 2(2^4) + 0(3^4)  -2(4^4)+ 1(5^4)]}{n[(-1)^2 + 2^2 + 0^2 + (-2)^2 + 1^2]}\\
+	 &= \frac{144}{10} = 14.4
+\end{align*}
+So
+\begin{align*}
+	{\bf x}_{4\cdot 0123} &= {\bf x}_4 - 195.8{\bf j} - 148.8{\bf x}_{1\cdot 0} - \frac{409}{7}{\bf x}_{2\cdot 01} - 14.4{\bf x}_{3\cdot 012}\\
+	&= (1^4, \ldots, 1^4, 2^4, \ldots, 2^4, 3^4, \ldots, 3^4, 4^4, \ldots, 4^4, 5^4, \ldots, 5^4)'\\
+	&- (195.8, \ldots, 195.8, 195.8, \ldots, 195.8, 195.8, \ldots, 195.8, 195.8, \ldots, 195.8, 195.8, \ldots, 195.8)'\\
+	&- (-297.6, \ldots, -297.6, -148.8, \ldots, -148.8, 0, \ldots, 0, 148.8, \ldots, 148.8, 297.6, \ldots, 297.6)'\\
+	&- (\frac{818}{7}, \ldots, \frac{818}{7}, -\frac{409}{7}, \ldots, -\frac{409}{7}, -\frac{818}{7}, \ldots, -\frac{818}{7}, \frac{-409}{7}, \ldots, \frac{-409}{7}, \frac{818}{7}, \ldots, \frac{818}{7})'\\
+	&- (-14.4, \ldots, -14.4, 28.8, \ldots, 28.8, 0, \ldots, 0, -28.8, \ldots, -28.8, 14.4, \ldots, 14.4)'\\
+	&= (\frac{12}{35}, \ldots, \frac{12}{35}, -\frac{48}{35}, \ldots, -\frac{48}{35}, \frac{72}{35}, \ldots, \frac{72}{35}, \frac{-48}{35}, \ldots, \frac{-48}{35}, \frac{12}{35}, \ldots, \frac{12}{35})'
+\end{align*}
+By rescaling we got:
+\begin{align*}
+	{\bf x}_{4\cdot 0123} &= (1, \ldots, 1, -4, \ldots, -4, 6, \ldots, 6, -4, \ldots, -4, 1, \ldots, 1)'
+\end{align*}
+So now we have transformed model:
+\begin{align*}
+	{\bf y} &= {\bf X}{\bf \beta} + \epsilon = {\bf Z}{\bf \theta} + \epsilon
+\end{align*}
+with
+\begin{align*}
+	{\bf Z} &= \left[{\bf z}_0, {\bf z}_1, {\bf z}_2, {\bf z}_3, {\bf z}_4\right] = \left[{\bf x}_0, {\bf x}_{1\cdot 0}, {\bf x}_{2\cdot 01}, {\bf x}_{3\cdot 012}, {\bf x}_{4\cdot 0123}\right]\\
+	&= \left[\begin{array}{ccccc} 1&-2&2&-1&1\\ \vdots&\vdots&\vdots&\vdots&\vdots \\
+	1&-2&2&-1&1 \\ 
+	1&-1&-1&2&-4 \\ \vdots&\vdots&\vdots&\vdots&\vdots \\
+	1&-1&-1&2&-4 \\
+	1&0&-2&0&6\\
+	\vdots&\vdots&\vdots&\vdots&\vdots\\
+	1&0&-2&0&6\\
+	1&1&-1&-2&-4\\
+	\vdots&\vdots&\vdots&\vdots&\vdots\\
+	1&1&-1&-2&-4 \\
+	1&2&2&1&1\\
+	\vdots&\vdots&\vdots&\vdots&\vdots\\
+	1&2&2&1&1\end{array}\right]
+\end{align*}
+and the columns of ${\bf Z}$ are orthogonal to each other.\vskip 2mm
+From the design matrix above we have:
+\begin{align*}
+{\bf z}_1'{\bf y} = n(-2\bar{{\bf y}}_{1\cdot} - \bar{{\bf y}}_{2\cdot}+ 0\times \bar{{\bf y}}_{3\cdot} + \bar{{\bf y}}_{4\cdot} + 2\bar{{\bf y}}_{5\cdot})
+\end{align*}
+The coefficients $(-2, -1, 0, 1, 2)$ shows the linear trend.\vskip 2mm
+Similarly from ${\bf z}_2$ we got the coefficient $(2, -1, -2, -1, 2)$ showing the quadratic trned, \vskip 2mm
+from ${\bf z}_3$ we got the coffeicient $(-1, 2, 0, -2, 1)$ showing the cubic trend, and\vskip 2mm
+
+from ${\bf z}_4$ we got the coefficient $(1, -4, 6, -4, 1)$ showing the quartic trend.\vskip 2mm
+Thus completed the solution for Queestion 3.
+\end{sol}
+
+Question $4$.
+\begin{sol}
+	We want to show that for the two way ANOVA model with interaction:
+	\begin{align*}
+		y_{ijk} &= \mu + \alpha_i + \beta_j  + \gamma_{ij} + \epsilon_{ijk}
+	\end{align*}
+	The expected mean square for the interaction term is:
+	\begin{align*}
+		E[\frac{SS(\gamma|\mu, \alpha, \beta)}{(a - 1)(b - 1)}] &= \sigma^2 + n\sum_{ij}\frac{\gamma^{\ast^2}_{ij}}{(a - 1)(b -1)}
+	\end{align*}
+	First we use the sum of square approach:\vskip 2mm
+	We know that:
+	\begin{align*}
+		SS(\gamma|\mu, \alpha,\beta) &= SS(\mu, \alpha, \beta, \gamma) - SS(\mu, \alpha, \beta)\\
+		&= \sum_{ij}\frac{y_{ij\cdot}^2}{n} - \sum_i\frac{y_{i\cdot\cdot}^2}{bn} - \sum_j\frac{y^2_{\cdot j\cdot}}{an} + \frac{y^2_{\cdot\cdot\cdot}}{abn}
+	\end{align*} 
+	From the textbook we already computed:
+	\begin{align*}
+		E\Big(\sum_{i = 1}^ay^2_{i\cdot\cdot}\Big) &= ab^2n^2\mu^{\ast^2} + b^2n^2\sum_{i = 1}^a\alpha_i^{\ast^2} + abn\sigma^2
+	\end{align*}
+	and
+	\begin{align*}
+		E(y^2_{\cdot\cdot\cdot}) &= a^2b^2n^2\mu^{\ast^2} + abn\sigma^2
+	\end{align*}
+	Similarly we can symmetrically have:
+	\begin{align*}
+		E\Big(\sum_{j = 1}^by^2_{\cdot j \cdot}\Big) &= a^2bn^2\mu^{\ast^2} + a^2n^2\sum_{j = 1}^b\beta_j^{\ast^2} + abn\sigma^2
+	\end{align*}
+	We can also compute:
+	\begin{align*}
+		E\Big(\sum_{ij}y^2_{ij\cdot}\Big) &= \sum_{ij}E[y^2_{ij\cdot}] = \sum_{ij}E[\Big(\sum_k (\mu^{\ast} + \alpha_i^{\ast} + \beta_j^{\ast} + \gamma^{\ast}_{ij} + \epsilon_{ijk})\Big)^2]\\
+		&= \sum_{ij}E\Big[\Big(n\mu^{\ast} + n\alpha_i^{\ast} + n\beta_j^{\ast} + n\gamma^{\ast}_{ij} + \sum_k\epsilon_{ijk}\Big)^2\Big]\\
+		&= \sum_{ij}\Big[n^2\mu^{\ast^2} + n^2\alpha_i^{\ast^2} + n^2\beta_j^{\ast^2} + n^2\gamma^{\ast^2}_{ij} + n\sigma^2\\
+		+ 2n^2\mu^{\ast}\alpha_i^{\ast} &+ 2n^2\mu^{\ast}\beta^{\ast}_j + 2n^2\mu^{\ast}\gamma^{\ast}_{ij} + 0 + 2n^2\alpha_i^{\ast}\beta_j^{\ast} + 2n^2\alpha_i^{\ast}\gamma_{ij}^{\ast} + 0 + 2n^2\beta_j^{\ast}\gamma_{ij}^{\ast} + 0 + 0\Big]\\
+		&= abn^2\mu^{\ast^2} + bn^2\sum_i\alpha_i^{\ast^2} + an^2\sum_j\beta_j^{\ast^2} + n^2\sum_{ij}\gamma_{ij}^{\ast^2} + abn\sigma^2
+	\end{align*}
+	So
+	\begin{align*}
+		E[SS(\gamma|\mu, \alpha, \beta)] &= E\Big[\frac{1}{n}\sum_{ij}y^2_{ij\cdot}\Big] - E\Big[\sum_i\frac{y^2_{i\cdot\cdot}}{bn}\Big] - E\Big[\sum_j \frac{y^2_{\cdot j\cdot}}{an}\Big] + E\Big[\frac{y^2_{\cdot\cdot\cdot}}{abn}\Big]\\
+		&= \Big(abn\mu^{\ast^2} + bn\sum_i\alpha_i^{\ast^2} + an\sum_j\beta_j^{\ast^2} + n\sum_{ij}\gamma_{ij}^{\ast^2} + ab\sigma^2\Big)\\
+		& - \Big(abn\mu^{\ast^2} + bn\sum_i\alpha_i^{\ast^2} + a\sigma^2\Big) 
+		- \Big(abn\mu^{\ast^2} + an\sum_{j}\beta_j^{\ast^2} + b\sigma^2\Big)\\
+		&+ \Big(abn\mu^{\ast^2} + \sigma^2\Big)\\
+		&= n\sum_{ij}\gamma_{ij}^{\ast^2} + \sigma^2[ab - a - b + 1]\\
+		&= n\sum_{ij}\gamma_{ij}^{\ast^2} + \sigma^2(a - 1)(b - 1)
+	\end{align*}
+	Thus we have the expected mean square as:
+	\begin{align*}
+		E[\frac{SS(\gamma|\mu, \alpha, \beta)}{(a-1)(b - 1)}] &= \sigma^2 + n\sum_{ij}\frac{\gamma^{\ast^2}_{ij}}{(a - 1)(b - 1)}
+	\end{align*}
+	which is the same as shown in Table 14.5\vskip 2mm
+	Now we use the quadratic form approach to do this problem:\vskip 2mm
+	I did not get the full answer because the matrix algebra here is very complicated. But I can give a stpe by step explanation on how to do it:\vskip 2mm
+	If we consider the model to be formulated as:
+	\begin{align*}
+		y_{ijk} &= \mu + \alpha_i + \beta_j + \gamma_{ij} + \epsilon_{ijk}
+	\end{align*}
+	$i = 1, \ldots, a, j = 1, \ldots, b$ and $k = 1, \ldots, n$.\vskip 2mm
+	Then similar to the example from textbook in Chapter 14, we can find that the rank of ${\bf X}$ is $ab$ and the submatrix of ${\bf X}'{\bf X}$ on the diagonal occupying the lower right corner with dimension $(ab) \times (ab)$ is:
+	\begin{align*}
+		\left[\begin{array}{ccccc} n&&&\\ &n&&\\ &&\vdots&\\ &&&n\end{array}\right]
+	\end{align*}
+	so a general inverse of ${\bf X}'{\bf X}$ is:
+	\begin{align*}
+		\Big({\bf X}'{\bf X}\Big)^{-} &= \frac{1}{n}\Big(\begin{array}{cc} {\bf 0}& {\bf 0}\\ {\bf 0}& {\bf I}_{ab}\end{array}\Big)
+	\end{align*}
+	The dimenion of the whole matrix $({\bf X}'{\bf X})^{-}$ is $(1 + a + b + ab )\times (1 + a + b + ab)$.\vskip 2mm
+	On the other hand, consider the null hypothesis for testing interaction:
+	\begin{align*}
+		H_0: \gamma_{ijk}^{\ast} = 0
+	\end{align*}
+	$\gamma_{ijk}^{\ast}$ is the redfined parameter that follows side condition. This is equivalent to testing if all of the following set of contrast functions are equal to $0$.
+	\begin{align*}
+		H_0: \gamma_{ij} - \gamma_{i(j + 1)} - \gamma_{(i + 1)j} + \gamma_{(i + 1)(j + 1)} = 0
+	\end{align*}
+	with $1 \leq i \leq a - 1$ and $1 \leq j \leq b-1$. So we have in total  $(a-1)(b-1)$ independent estimable functions, and if we line up the parameters as:
+	\begin{align*}
+		{\bf \beta} &= (\mu, \alpha_1, \ldots, \alpha_a, \beta_1, \ldots, \beta_b, \gamma_{11}, \ldots, \gamma_{ab})
+	\end{align*}
+	We can write the above $(a-1)(b-1)$ independent tests as:
+	\begin{align*}
+		H_0: {\bf C}{\bf \beta} = 0
+	\end{align*}
+	This test is equivalent to the test of interaction. To find a concise form to represent matrix ${\bf C}$ in general would be very difficult, if we are assuming level $a$ on treatment $A$ and level $b$ on treatment $B$.\vskip 2mm
+	But in theory we can now compute:
+	\begin{align*}
+		S(\gamma|\mu, \alpha, \beta) &= SSH = ({\bf C}\hat{\beta})'[{\bf C}({\bf X}'{\bf X})^-{\bf C}']^{-1}{\bf C}\hat{\beta}\\
+		&= {\bf y}'{\bf X}({\bf X}'{\bf X})^-{\bf C}'\Big[{\bf C}({\bf X}'{\bf X})^{-}{\bf C}'\Big]^{-1}{\bf C}({\bf X}'{\bf X})^-{\bf X}'{\bf y}\\
+		&= {\bf y}'{\bf A}{\bf y}
+	\end{align*}
+	Here
+	\begin{align*}
+		{\bf A} &= {\bf X}({\bf X}'{\bf X})^-{\bf C}'\Big[{\bf C}({\bf X}'{\bf X})^{-}{\bf C}'\Big]^{-1}{\bf C}({\bf X}'{\bf X})^-{\bf X}'
+	\end{align*}
+	Then we have:
+	\begin{align*}
+		E[S(\gamma|\mu, \alpha, \beta)] &= E[{\bf y}'{\bf A}{\bf y}] = \sigma^2tr{A}  + {\bf \mu}'{\bf A}{\bf \mu}
+	\end{align*}
+	It is not difficult to show that $A$ is idempotent with rank $(a - 1)(b - 1)$, so $tr(A)= (a - 1)(b - 1)$, but it is not easy to show
+	\begin{align*}
+		\mu'{\bf A}\mu = n\sum_{ij}\gamma_{ij}^{\ast^2}
+	\end{align*}
+	This is where I stopped.
+\end{sol}
+
+Question $5$.
+\begin{sol}
+	For part $(i)$:\vskip 2mm
+	We still have model
+	\begin{align*}
+		y_{ijk} &= \mu + \alpha_i + \beta_j + \gamma_{ij} + \epsilon_{ijk}
+	\end{align*}
+	except that $i = 1, 2, 3, 4$ and $j = 1, 2, 3$. So our null hypothesis is:
+	\begin{align*}
+		\gamma^{\ast}_{ij} = 0, i = 1 , 2, 3, 4 \text{ and }j = 1, 2, 3
+	\end{align*}
+	Here $\gamma^{\ast}_{ij}$ is the redfined interaction term that follows side conditions.\vskip 2mm
+%	Since we have:
+%	\begin{align*}
+%		\gamma^{\ast}_{ij} =\gamma_{ij} -  \bar{\gamma}_{i\cdot} - \bar{\gamma}_{\cdot j} + \bar{\gamma}_{\cdot\cdot}
+%	\end{align*}
+%	Thus $\gamma_{ij}^{\ast} = 0$ gives
+%	\begin{align*}
+%		\gamma_{ij} =  \bar{\gamma}_{i\cdot} + \bar{\gamma}_{\cdot j} - \bar{\gamma}_{\cdot\cdot}
+%	\end{align*}
+%	We
+	The equivalent form of the null hypothesis is:
+	\begin{align*}
+		H_0: \gamma_{ij} - \gamma_{ij'} - \gamma_{i'j} + \gamma_{i'j'} = 0 \text{ for any }i \neq i', j \neq j'
+	\end{align*}
+	and we can re-write it as:
+	\begin{align*}
+		H_0: \left(\begin{array}{c} \gamma_{11} - \gamma_{12} - \gamma_{21} + \gamma_{22}\\ \gamma_{21} - \gamma_{22} - \gamma_{31} + \gamma_{32}\\ \gamma_{31} - \gamma_{32} - \gamma_{41} + \gamma_{42}\\ \gamma_{12} - \gamma_{13} - \gamma_{22} + \gamma_{23} \\ \gamma_{22} - \gamma_{23} - \gamma_{32} + \gamma_{33}\\ \gamma_{32} - \gamma_{33} - \gamma_{42} + \gamma_{43}\end{array}\right) = \left(\begin{array}{c} 0\\ 0\\ 0\\ 0\\ 0\\0 \end{array}\right)
+	\end{align*}
+	It is what we expected since $SS(\gamma|\alpha, \beta, \mu)$ has degree of freedom $(a-1) \times (b - 1) = 3 \times 2 = 6$.
+	Since
+	\begin{align*}
+		\beta = (\mu, \alpha_1, \ldots, \alpha_4, \beta_1, \ldots, \beta_3, \gamma_{11}, \ldots, \gamma_{43})
+	\end{align*}
+	The null hyothesis above can be expressed as:
+	\begin{align*}
+		H_0: {\bf C}{\bf \beta} = 0
+	\end{align*}
+	with ${\bf C}$ being a $6 \times (1 + 4 + 3 + 12) = 6 \times 20$ dimensioned matrix:
+	\begin{align*}
+ 		{\bf C} &= \left(\begin{array}{ccccccccccccc} \overrightarrow{0}&1&-1&0&-1&1&0&&&&&&\\ \overrightarrow{0}&&&&1&-1&0&-1&1&0&&&\\ \overrightarrow{0}&&&&&&&1&-1&0&-1&1&0\\ \overrightarrow{0}&0&1&-1&0&-1&1&&&&&&\\ \overrightarrow{0}&&&&0&1&-1&0&-1&1&&&\\ \overrightarrow{0}&&&&&&&0&1&-1&0&-1&1\end{array}\right)
+	\end{align*}
+	Here $\overrightarrow{0}$ is an $0$ row vector of length $8$.\vskip 2mm
+	Since the rows of ${\bf C}$ are linearly independent, we can apply Theorem $12.7b$ as following:\vskip 2mm
+	Compute:
+	\begin{align*}
+		SSH &= ({\bf C}\hat{\beta})'\Big[{\bf C}({\bf X}'{\bf X})^{-}{\bf C}'\Big]^{-1}{\bf C}\hat{\beta}
+	\end{align*}
+	and 
+	\begin{align*}
+		SSE &= {\bf y}'\Big[I - {\bf X}({\bf X}'{\bf X})^-{\bf X}'\Big]{\bf y}
+	\end{align*}
+	and define statistic
+	\begin{align*}
+		F^{\ast} &= \frac{SSH/(a-1)(b-1)}{SSE/(abn-ab)}
+	\end{align*}
+	Theorem $12.7b$ guarantees that $F^{\ast}$ is centered $F((a-1)(b-1), ab(n - 1))$ distribution under null hypothesis, and large value of $F^{\ast}$ shows evidence against null hypothesis.\vskip 2mm
+	For part $(ii)$:\vskip 2mm
+	For unbalanced model,  it is:
+	\begin{align*}
+		y_{ij} = \mu_i + \epsilon_{ij}
+	\end{align*}
+	while $j = 1, \ldots, n_i$ and $i = 1, \ldots, k$.\vskip 2mm
+	We can writ the model in matrix form:
+	\begin{align*}
+		{\bf y} = {\bf W}{\mu} + {\bf \epsilon}
+	\end{align*}
+	with 
+	\begin{align*}
+		W = \left[\begin{array}{cccc} 1&0&\cdots&0\\ \vdots&\vdots&&\vdots\\ 1&0&\cdots&0\\ 0&1&\cdots&0\\ \vdots&\vdots&&\vdots\\ 0&1&\cdots&0\\ \vdots &\vdots&&\vdots\\ 0&0&&1\\ \vdots&\vdots&&\vdots\\ 0&0&\cdots&1 \end{array}\right]
+	\end{align*}
+	So the rank of $W$ is $k$(full rank), and since it is unbalanced study, the number of $1$'s in each column is $n_i$, with $\sum_i n_i = N$.\vskip 2mm
+	Our normal equation is:
+	\begin{align*}
+		{\bf W}'{\bf W} \hat{\mu} = {\bf W}'{\bf y}
+	\end{align*}
+	and the estimation is:
+	\begin{align*}
+		\hat{\mu} &= ({\bf W}'{\bf W})^{-1}{\bf W}'{\bf y} \\
+		&= \left[\begin{array}{cccc} n_1&&&\\ &n_2&&\\ &&\ddots&\\ &&&n_k\end{array}\right]^{-1}\left[\begin{array}{c} {\bf y}_{1\cdot}\\ {\bf y}_{2\cdot}\\ \vdots\\ {\bf y}_{k\cdot}\end{array}\right]=  \bar{{\bf y}} = \left(\begin{array}{c} \bar{y}_{1\cdot}\\ \bar{y}_{2\cdot}\\ \vdots\\ \bar{y}_{k\cdot} \end{array}\right)
+	\end{align*}
+	we can then compute the SSE:
+	\begin{align*}
+		SSE &= {\bf y}'{\bf y} - \hat{\mu}'{\bf W}'{\bf y}\\
+		&= \sum_{i = 1}^k\sum_{j = 1}^{n_i}y^2_{ij} - \sum_{i = 1}^k\frac{y_{i\cdot}^2}{n_i} \text{ with  degree of freedom }N - k
+	\end{align*}
+	Meanwhile we can consider reduced model ($\mu_1 = \mu_2 = \ldots = \mu_k = \mu$):
+	\begin{align*}
+		y_{ij} &= \mu + \epsilon_{ij}
+	\end{align*}
+	we have:
+	\begin{align*}
+		{\bf W}_R &= \left[\begin{array}{c} 1\\ 1\\ \vdots\\ 1\end{array}\right]
+	\end{align*}
+	and hence 
+	\begin{align*}
+		\hat{\mu} = ({\bf W}_R'{\bf W}_R)^{-1}{\bf W}_R{\bf y} = \frac{1}{N}{\bf y}_{\cdot\cdot} = \bar{y}_{\cdot\cdot}
+	\end{align*}
+	So the sum of square between the full and reduced mode is:
+	\begin{align*}	
+	SSB &= SS(F) - SS(R) = (\bar{y}_{1\cdot}, \ldots, \bar{y}_{k\cdot}){\bf W}'{\bf y} - \bar{y}_{\cdot\cdot}{\bf W}'_R{\bf y}\\
+	&= \sum_{i = 1}^{k}\bar{y}_{i\cdot}y_{i\cdot} - N\bar{y}^2_{\cdot\cdot}\\
+	&= \sum_{i = 1}^{k}\frac{y_{i\cdot}^2}{n_i} - \frac{y^2_{\cdot\cdot}}{N}
+	\end{align*}
+	with degree of freedom $k - 1$. \vskip 2mm
+	So we have the following ANOVA table:\vskip 2mm
+	\begin{tabular}{ccccc}
+	\hline
+		Source of Variation&df&Sum of Squares&Mean Square& F statistic \\
+	\hline
+		Between&$k - 1$& $\sum_{i = 1}^{k}\frac{y_{i\cdot}^2}{n_i} - \frac{y^2_{\cdot\cdot}}{N}$&$SSB/(k - 1)$&$\frac{SSB/(k - 1)}{SSE/(N - k)}$\\
+		Error&$N - k$&$\sum_{i = 1}^k\sum_{j = 1}^{n_i}y^2_{ij} - \sum_{i = 1}^k\frac{y_{i\cdot}^2}{n_i}$&$SSE/(N - k)$&\\
+		Total&$N - 1$&$\sum_{i = 1}^k\sum_{j = 1}^{n_i}y^2_{ij}  - \frac{y^2_{\cdot\cdot}}{N}$&&\\
+	\hline
+	\end{tabular}
+	\vskip 2mm
+	Thus completed the solution of question $5$.
+\end{sol}
+
+Question $6$
+\begin{sol}
+	I confirm that I have studied the extra reading material for different coding schemes in these two chapters.
+\end{sol}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
